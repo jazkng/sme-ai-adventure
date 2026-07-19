@@ -1,0 +1,2682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#08111f" />
+  <meta name="description" content="吉隆坡甲洞中小型企业商会 SME AI 转型大冒险" />
+  <title>SME AI 转型大冒险｜吉隆坡甲洞中小型企业商会</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans SC"', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            primary: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              900: '#064e3b'
+            },
+            brand: {
+              navy: '#0b1830',
+              blue: '#1d4ed8',
+              gold: '#f59e0b',
+              amber: '#d97706'
+            }
+          },
+          boxShadow: {
+            glow: '0 0 40px rgba(16,185,129,.18)'
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Sans SC", system-ui, sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 16% 10%, rgba(29, 78, 216, .20), transparent 30%),
+        radial-gradient(circle at 84% 12%, rgba(245, 158, 11, .13), transparent 26%),
+        radial-gradient(circle at 50% 100%, rgba(16, 185, 129, .13), transparent 32%),
+        #07101e;
+    }
+
+    .glass-card {
+      background: linear-gradient(145deg, rgba(22, 34, 54, .88), rgba(12, 22, 39, .78));
+      border: 1px solid rgba(148, 163, 184, .15);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .28);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .soft-card {
+      background: rgba(15, 29, 49, .72);
+      border: 1px solid rgba(148, 163, 184, .12);
+    }
+
+    .screen {
+      animation: screenIn .34s ease both;
+    }
+
+    @keyframes screenIn {
+      from { opacity: 0; transform: translateY(10px) scale(.992); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .industry-card.selected,
+    .choice-card.selected {
+      border-color: rgba(52, 211, 153, .85);
+      background: linear-gradient(135deg, rgba(5, 150, 105, .22), rgba(13, 148, 136, .10));
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, .08);
+      color: white;
+    }
+
+    .painpoint-label:has(input:checked) {
+      border-color: rgba(52, 211, 153, .72);
+      background: rgba(5, 150, 105, .14);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      box-shadow: 0 12px 30px rgba(5, 150, 105, .25);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .focus-ring:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      outline: 3px solid rgba(52, 211, 153, .38);
+      outline-offset: 2px;
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, rgba(51,65,85,.55), rgba(100,116,139,.45), rgba(51,65,85,.55));
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite linear;
+    }
+
+    @keyframes shimmer {
+      to { background-position: -200% 0; }
+    }
+
+    .safe-header {
+      padding-top: var(--safe-top);
+    }
+
+    .safe-bottom {
+      padding-bottom: max(16px, var(--safe-bottom));
+    }
+
+
+    .industry-photo {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .industry-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(to top, rgba(5, 12, 24, .96), rgba(5, 12, 24, .12) 70%);
+    }
+
+    .quiz-visual {
+      min-height: 185px;
+      background:
+        linear-gradient(to top, rgba(4, 10, 22, .92), rgba(4, 10, 22, .12)),
+        linear-gradient(135deg, #10233d, #07101e);
+      background-position: center;
+      background-size: cover;
+    }
+
+    .phone-valid {
+      border-color: rgba(52, 211, 153, .8) !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, .08);
+    }
+
+    .phone-invalid {
+      border-color: rgba(251, 113, 133, .8) !important;
+      box-shadow: 0 0 0 3px rgba(244, 63, 94, .08);
+    }
+
+    @media (max-width: 640px) {
+      .mobile-sticky-action {
+        position: sticky;
+        bottom: max(10px, var(--safe-bottom));
+        z-index: 20;
+        padding: 10px;
+        margin-inline: -10px;
+        border-radius: 16px;
+        background: rgba(7, 16, 30, .88);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .glass-card {
+        border-radius: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="text-slate-100 selection:bg-primary-500 selection:text-white">
+  <div aria-hidden="true" class="fixed inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute -top-28 -left-24 h-80 w-80 rounded-full bg-blue-600/10 blur-3xl"></div>
+    <div class="absolute top-1/3 -right-28 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl"></div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast"
+       class="fixed top-5 left-1/2 z-[80] flex max-w-[calc(100%-24px)] -translate-x-1/2 translate-y-[-16px] items-center gap-2 rounded-full border border-slate-700/80 bg-slate-950/95 px-5 py-3 text-sm font-medium text-slate-100 opacity-0 shadow-2xl pointer-events-none transition-all duration-300"
+       role="status" aria-live="polite">
+    <span id="toast-icon">✨</span>
+    <span id="toast-msg">提示内容</span>
+  </div>
+
+  <!-- Header -->
+  <header class="safe-header sticky top-0 z-50 border-b border-slate-800/80 bg-[#07101e]/88 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+      <button onclick="goToScreen('welcome')" class="flex min-w-0 items-center gap-3 text-left">
+        <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-amber-300 via-amber-500 to-orange-600 font-black text-slate-950 shadow-lg shadow-amber-500/20">
+          KLK
+        </div>
+        <div class="min-w-0">
+          <h1 class="truncate text-sm font-extrabold tracking-wide text-amber-300 md:text-base">
+            吉隆坡甲洞中小型企业商会
+          </h1>
+          <p class="truncate text-[11px] text-slate-400 md:text-xs">SME AI 转型赋能计划</p>
+        </div>
+      </button>
+
+      <button onclick="toggleDashboard()"
+              class="focus-ring inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/80 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:border-amber-500/50 hover:text-white">
+        <svg class="h-4 w-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 19V9m5 10V5m5 14v-7m5 7V3" />
+        </svg>
+        <span class="hidden sm:inline">会长数据面板</span>
+        <span class="sm:hidden">后台</span>
+      </button>
+    </div>
+  </header>
+  <div id="storage-mode-banner" class="border-b border-primary-500/15 bg-primary-500/7">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2 text-[10px] leading-5 text-primary-200">
+      <span>✅ Google Sheets 已连接：资料会先保存在本机，并同步发送到商会 Google Sheet。</span>
+      <button onclick="showStorageStatus()" class="shrink-0 rounded-lg border border-primary-500/20 px-2.5 py-1 font-bold hover:bg-primary-500/10">
+        查看状态
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Step rail -->
+  <div id="step-rail" class="hidden border-b border-slate-800/70 bg-slate-950/25">
+    <div class="mx-auto flex max-w-4xl items-center gap-2 overflow-x-auto px-4 py-3 text-[11px] text-slate-500">
+      <div data-step="profile" class="step-pill flex shrink-0 items-center gap-2 rounded-full border border-slate-800 px-3 py-1.5">
+        <span class="grid h-5 w-5 place-items-center rounded-full bg-slate-800 text-[10px]">1</span> 行业登记
+      </div>
+      <div class="h-px min-w-4 flex-1 bg-slate-800"></div>
+      <div data-step="quiz" class="step-pill flex shrink-0 items-center gap-2 rounded-full border border-slate-800 px-3 py-1.5">
+        <span class="grid h-5 w-5 place-items-center rounded-full bg-slate-800 text-[10px]">2</span> 情境闯关
+      </div>
+      <div class="h-px min-w-4 flex-1 bg-slate-800"></div>
+      <div data-step="playground" class="step-pill flex shrink-0 items-center gap-2 rounded-full border border-slate-800 px-3 py-1.5">
+        <span class="grid h-5 w-5 place-items-center rounded-full bg-slate-800 text-[10px]">3</span> AI 实操
+      </div>
+      <div class="h-px min-w-4 flex-1 bg-slate-800"></div>
+      <div data-step="result" class="step-pill flex shrink-0 items-center gap-2 rounded-full border border-slate-800 px-3 py-1.5">
+        <span class="grid h-5 w-5 place-items-center rounded-full bg-slate-800 text-[10px]">4</span> 专属报告
+      </div>
+    </div>
+  </div>
+
+  <main class="relative mx-auto flex min-h-[calc(100vh-74px)] w-full max-w-5xl items-center px-4 py-8 md:py-12">
+
+    <!-- Welcome -->
+    <section id="screen-welcome" class="screen w-full py-4">
+      <div class="mx-auto max-w-4xl text-center">
+        <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-primary-500/25 bg-primary-900/35 px-4 py-2 text-xs font-bold tracking-[.16em] text-primary-300">
+          <span class="h-2 w-2 rounded-full bg-primary-400 shadow-[0_0_12px_rgba(52,211,153,.9)]"></span>
+          商会会员专属体验
+        </div>
+
+        <h2 class="text-balance text-4xl font-black leading-[1.12] tracking-tight text-white md:text-6xl">
+          SME AI 转型
+          <span class="bg-gradient-to-r from-emerald-300 via-primary-400 to-amber-300 bg-clip-text text-transparent">大冒险</span>
+        </h2>
+
+        <p class="mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-400 md:text-lg md:leading-8">
+          用 3 分钟测试企业 AI 准备指数，亲自体验 AI 写文案、策划广告海报，
+          并获得适合您行业的转型建议。
+        </p>
+
+        <div class="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+          <div class="soft-card rounded-2xl p-5 text-left transition hover:-translate-y-1 hover:border-primary-500/35">
+            <div class="mb-4 grid h-11 w-11 place-items-center rounded-2xl bg-blue-500/12 text-2xl">🎮</div>
+            <h3 class="text-sm font-bold text-white">老板情境闯关</h3>
+            <p class="mt-2 text-xs leading-5 text-slate-400">用真实经营场景，快速看懂 AI 能解决什么。</p>
+          </div>
+          <div class="soft-card rounded-2xl p-5 text-left transition hover:-translate-y-1 hover:border-primary-500/35">
+            <div class="mb-4 grid h-11 w-11 place-items-center rounded-2xl bg-emerald-500/12 text-2xl">✨</div>
+            <h3 class="text-sm font-bold text-white">AI 现场实操</h3>
+            <p class="mt-2 text-xs leading-5 text-slate-400">输入品牌资料，马上生成可用宣传内容。</p>
+          </div>
+          <div class="soft-card rounded-2xl p-5 text-left transition hover:-translate-y-1 hover:border-primary-500/35">
+            <div class="mb-4 grid h-11 w-11 place-items-center rounded-2xl bg-amber-500/12 text-2xl">📊</div>
+            <h3 class="text-sm font-bold text-white">专属转型建议</h3>
+            <p class="mt-2 text-xs leading-5 text-slate-400">按行业、痛点和答题表现推荐下一步行动。</p>
+          </div>
+        </div>
+
+        <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <button onclick="startAdventure()"
+                  class="btn-primary focus-ring inline-flex w-full items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-extrabold text-white transition sm:w-auto">
+            立即开始测试
+            <span aria-hidden="true">→</span>
+          </button>
+          <span class="text-xs text-slate-500">无需注册 · 约 3 分钟完成</span>
+        </div>
+
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-slate-500">
+          <span>✓ 适合非科技背景老板</span>
+          <span>✓ 手机可直接操作</span>
+          <span>✓ 结果仅作商会培训规划</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile -->
+    <section id="screen-profile" class="screen hidden w-full">
+      <div class="glass-card mx-auto max-w-5xl rounded-3xl p-5 md:p-8">
+        <div class="mb-6 flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <span class="text-[11px] font-bold tracking-[.16em] text-primary-400">STEP 01</span>
+            <h3 class="mt-1 text-xl font-extrabold text-white md:text-2xl">老板，只需填写 3 项资料</h3>
+            <p class="mt-1 text-xs text-slate-500">选择行业、留下联系电话，再告诉我们最想解决的问题。</p>
+          </div>
+          <span class="rounded-full bg-slate-800 px-3 py-1.5 text-[10px] text-slate-400">约 45 秒</span>
+        </div>
+
+        <div class="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-primary-500/15 bg-primary-500/7 p-4">
+            <span class="text-lg">1️⃣</span>
+            <p class="mt-2 text-xs font-bold text-slate-200">选择行业</p>
+            <p class="mt-1 text-[10px] leading-5 text-slate-500">系统会自动换成您的行业题目。</p>
+          </div>
+          <div class="rounded-2xl border border-blue-500/15 bg-blue-500/7 p-4">
+            <span class="text-lg">2️⃣</span>
+            <p class="mt-2 text-xs font-bold text-slate-200">留下电话</p>
+            <p class="mt-1 text-[10px] leading-5 text-slate-500">方便商会发送报告和课程资料。</p>
+          </div>
+          <div class="rounded-2xl border border-amber-500/15 bg-amber-500/7 p-4">
+            <span class="text-lg">3️⃣</span>
+            <p class="mt-2 text-xs font-bold text-slate-200">回答 6 题</p>
+            <p class="mt-1 text-[10px] leading-5 text-slate-500">每题只需点选最接近的做法。</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="mb-3 flex items-end justify-between gap-3">
+            <label class="block text-sm font-bold text-slate-200">① 您目前从事什么行业？</label>
+            <span class="text-[10px] text-slate-500">请选择最接近的一项</span>
+          </div>
+
+          <div id="industry-container" class="grid grid-cols-2 gap-3 md:grid-cols-3">
+            <button type="button" onclick="selectIndustry('汽车美容与后市场', this)"
+                    class="industry-card industry-photo focus-ring flex min-h-[128px] flex-col items-start justify-end rounded-2xl border border-slate-700 bg-slate-800/35 p-4 text-left text-white transition hover:border-primary-500/60"
+                    style="background-image:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=82');background-size:cover;background-position:center;">
+              <span class="text-2xl">🚗</span><span class="mt-1 text-xs font-extrabold">汽车美容 / 后市场</span>
+            </button>
+
+            <button type="button" onclick="selectIndustry('餐饮与食品', this)"
+                    class="industry-card industry-photo focus-ring flex min-h-[128px] flex-col items-start justify-end rounded-2xl border border-slate-700 bg-slate-800/35 p-4 text-left text-white transition hover:border-primary-500/60"
+                    style="background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=82');background-size:cover;background-position:center;">
+              <span class="text-2xl">🍲</span><span class="mt-1 text-xs font-extrabold">餐饮 / 食品</span>
+            </button>
+
+            <button type="button" onclick="selectIndustry('零售与商贸', this)"
+                    class="industry-card industry-photo focus-ring flex min-h-[128px] flex-col items-start justify-end rounded-2xl border border-slate-700 bg-slate-800/35 p-4 text-left text-white transition hover:border-primary-500/60"
+                    style="background-image:url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=82');background-size:cover;background-position:center;">
+              <span class="text-2xl">🛍️</span><span class="mt-1 text-xs font-extrabold">批发 / 零售</span>
+            </button>
+
+            <button type="button" onclick="selectIndustry('专业咨询服务', this)"
+                    class="industry-card industry-photo focus-ring flex min-h-[128px] flex-col items-start justify-end rounded-2xl border border-slate-700 bg-slate-800/35 p-4 text-left text-white transition hover:border-primary-500/60"
+                    style="background-image:url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=82');background-size:cover;background-position:center;">
+              <span class="text-2xl">👔</span><span class="mt-1 text-xs font-extrabold">专业咨询 / 服务</span>
+            </button>
+
+            <button type="button" onclick="selectIndustry('物流与制造业', this)"
+                    class="industry-card industry-photo focus-ring flex min-h-[128px] flex-col items-start justify-end rounded-2xl border border-slate-700 bg-slate-800/35 p-4 text-left text-white transition hover:border-primary-500/60"
+                    style="background-image:url('https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1200&q=82');background-size:cover;background-position:center;">
+              <span class="text-2xl">🏭</span><span class="mt-1 text-xs font-extrabold">制造 / 物流</span>
+            </button>
+
+            <button type="button" onclick="selectIndustry('其他领域', this)"
+                    class="industry-card industry-photo focus-ring flex min-h-[128px] flex-col items-start justify-end rounded-2xl border border-slate-700 bg-slate-800/35 p-4 text-left text-white transition hover:border-primary-500/60"
+                    style="background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=82');background-size:cover;background-position:center;">
+              <span class="text-2xl">💡</span><span class="mt-1 text-xs font-extrabold">其他行业</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div>
+            <label for="business-name" class="mb-2 block text-sm font-bold text-slate-200">② 公司 / 商家名称 <span class="font-normal text-slate-600">（选填）</span></label>
+            <input id="business-name" type="text" maxlength="80"
+                   placeholder="例：甲洞幸福茶室"
+                   class="focus-ring w-full rounded-2xl border border-slate-700 bg-slate-900/70 px-4 py-3.5 text-sm text-slate-100 placeholder:text-slate-600" />
+          </div>
+
+          <div>
+            <label for="owner-phone" class="mb-2 block text-sm font-bold text-slate-200">③ 老板联系电话 <span class="text-rose-400">*</span></label>
+            <input id="owner-phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="18"
+                   placeholder="例：012-692 7880"
+                   oninput="validatePhoneField()"
+                   class="focus-ring w-full rounded-2xl border border-slate-700 bg-slate-900/70 px-4 py-3.5 text-sm text-slate-100 placeholder:text-slate-600" />
+            <p id="phone-help" class="mt-1.5 text-[10px] text-slate-500">仅用于商会联系、发送测试报告或课程资料。</p>
+          </div>
+        </div>
+
+        <div class="mt-7">
+          <div class="mb-3 flex items-end justify-between gap-3">
+            <label class="block text-sm font-bold text-slate-200">④ 最让您头痛或消耗时间的是？</label>
+            <span class="text-[10px] text-slate-500">可多选</span>
+          </div>
+
+          <div id="painpoints-container" class="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <label class="painpoint-label flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-700 bg-slate-800/30 p-4 transition hover:bg-slate-800/60">
+              <input type="checkbox" name="painpoint" value="写宣传文案、发社交媒体" class="mt-0.5 h-5 w-5 accent-primary-500" />
+              <span><strong class="block text-xs text-slate-200">宣传文案与社交媒体</strong><small class="mt-1 block text-[11px] leading-5 text-slate-500">内容写不出、发布后没人看</small></span>
+            </label>
+
+            <label class="painpoint-label flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-700 bg-slate-800/30 p-4 transition hover:bg-slate-800/60">
+              <input type="checkbox" name="painpoint" value="做广告海报、宣传图设计" class="mt-0.5 h-5 w-5 accent-primary-500" />
+              <span><strong class="block text-xs text-slate-200">广告图片与宣传设计</strong><small class="mt-1 block text-[11px] leading-5 text-slate-500">设计费高、修改慢、出图不稳定</small></span>
+            </label>
+
+            <label class="painpoint-label flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-700 bg-slate-800/30 p-4 transition hover:bg-slate-800/60">
+              <input type="checkbox" name="painpoint" value="客户回复太慢、容易漏单" class="mt-0.5 h-5 w-5 accent-primary-500" />
+              <span><strong class="block text-xs text-slate-200">客户咨询与跟进</strong><small class="mt-1 block text-[11px] leading-5 text-slate-500">回复慢、重复回答、容易漏单</small></span>
+            </label>
+
+            <label class="painpoint-label flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-700 bg-slate-800/30 p-4 transition hover:bg-slate-800/60">
+              <input type="checkbox" name="painpoint" value="日常记账分类、对数太繁琐" class="mt-0.5 h-5 w-5 accent-primary-500" />
+              <span><strong class="block text-xs text-slate-200">记账、账单与数据整理</strong><small class="mt-1 block text-[11px] leading-5 text-slate-500">资料分散、重复输入、容易出错</small></span>
+            </label>
+
+            <label class="painpoint-label flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-700 bg-slate-800/30 p-4 transition hover:bg-slate-800/60">
+              <input type="checkbox" name="painpoint" value="员工培训与流程不统一" class="mt-0.5 h-5 w-5 accent-primary-500" />
+              <span><strong class="block text-xs text-slate-200">员工培训与标准流程</strong><small class="mt-1 block text-[11px] leading-5 text-slate-500">新人上手慢、不同员工做法不同</small></span>
+            </label>
+
+            <label class="painpoint-label flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-700 bg-slate-800/30 p-4 transition hover:bg-slate-800/60">
+              <input type="checkbox" name="painpoint" value="库存、采购与营运分析" class="mt-0.5 h-5 w-5 accent-primary-500" />
+              <span><strong class="block text-xs text-slate-200">库存、采购与营运分析</strong><small class="mt-1 block text-[11px] leading-5 text-slate-500">缺货才发现、采购靠感觉、没有实时数据</small></span>
+            </label>
+          </div>
+        </div>
+
+        <label class="mt-6 flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-800 bg-slate-950/35 p-4">
+          <input id="data-consent" type="checkbox" class="mt-0.5 h-5 w-5 accent-primary-500" />
+          <span class="text-[11px] leading-5 text-slate-400">
+            我同意吉隆坡甲洞中小型企业商会记录我的行业、联系电话和测试结果，用于发送报告、课程资讯及了解会员 AI 培训需求。
+          </span>
+        </label>
+
+        <div class="mobile-sticky-action mt-7 flex items-center justify-between gap-3">
+          <button onclick="goToScreen('welcome')" class="rounded-xl px-4 py-3 text-sm font-semibold text-slate-400 transition hover:text-white">
+            返回
+          </button>
+          <button id="profile-submit-btn" onclick="submitProfile()"
+                  class="btn-primary focus-ring inline-flex flex-1 items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-white transition sm:flex-none">
+            开始行业专属测试 <span>→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section id="screen-quiz" class="screen hidden w-full">
+      <div class="glass-card mx-auto max-w-4xl overflow-hidden rounded-3xl">
+        <div class="border-b border-slate-800 p-5 md:p-7">
+          <div class="mb-3 flex items-center justify-between gap-3 text-[11px] text-slate-400">
+            <span class="font-semibold text-primary-400"><span id="quiz-industry-label">行业</span> · AI 经营情境挑战</span>
+            <span id="quiz-progress-text">问题 1 / 6</span>
+          </div>
+          <div class="h-2 overflow-hidden rounded-full bg-slate-800">
+            <div id="quiz-progress-bar" class="h-full rounded-full bg-gradient-to-r from-primary-500 to-cyan-400 transition-all duration-500" style="width:16.67%"></div>
+          </div>
+        </div>
+
+        <div class="p-5 md:p-7">
+          <div id="quiz-visual" class="quiz-visual relative overflow-hidden rounded-2xl border border-slate-700/70 p-5 md:min-h-[225px] md:p-7">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent"></div>
+            <div class="relative flex min-h-[150px] flex-col justify-end">
+              <div class="mb-auto flex items-start justify-between gap-3">
+                <span id="quiz-scenario-tag" class="inline-flex rounded-lg border border-amber-500/30 bg-slate-950/75 px-2.5 py-1 text-[10px] font-bold text-amber-300 backdrop-blur">
+                  场景
+                </span>
+                <span id="quiz-category" class="rounded-full border border-white/15 bg-slate-950/65 px-3 py-1 text-[10px] text-slate-300 backdrop-blur">经营效率</span>
+              </div>
+
+              <p id="quiz-context" class="mb-2 text-[11px] leading-5 text-slate-300"></p>
+              <h4 id="quiz-question-title" class="text-base font-extrabold leading-7 text-white md:text-xl"></h4>
+            </div>
+          </div>
+
+          <div class="mt-4 rounded-xl border border-blue-500/15 bg-blue-500/7 px-4 py-3 text-[11px] leading-5 text-blue-200">
+            👆 老板只需选择<strong>最接近您现在做法</strong>的答案，没有考试对错。
+          </div>
+
+          <div id="quiz-options-container" class="mt-5 space-y-3"></div>
+
+          <div id="quiz-feedback" class="mt-5 hidden rounded-2xl border p-4">
+            <div class="flex gap-3">
+              <div id="quiz-feedback-emoji" class="text-2xl">💡</div>
+              <div>
+                <h5 id="quiz-feedback-title" class="text-sm font-bold"></h5>
+                <p id="quiz-feedback-body" class="mt-1 text-xs leading-6 text-slate-300"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mobile-sticky-action mt-5 flex justify-between gap-3">
+            <button onclick="restartCurrentIndustryQuiz()" class="rounded-xl px-3 py-3 text-xs font-semibold text-slate-500 transition hover:text-white">
+              重新开始
+            </button>
+            <button id="quiz-next-btn" onclick="nextQuiz()"
+                    class="btn-primary focus-ring hidden flex-1 rounded-xl px-6 py-3.5 text-sm font-bold text-white transition sm:flex-none">
+              下一题 →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Playground -->
+    <section id="screen-playground" class="screen hidden w-full">
+      <div class="glass-card mx-auto max-w-5xl rounded-3xl p-5 md:p-8">
+        <div class="flex flex-col justify-between gap-3 border-b border-slate-800 pb-5 sm:flex-row sm:items-end">
+          <div>
+            <span class="text-[11px] font-bold tracking-[.16em] text-amber-400">STEP 03 / AI 实操</span>
+            <h3 class="mt-2 text-xl font-extrabold text-white md:text-2xl">现场体验 AI 帮老板做事</h3>
+            <p class="mt-1 text-xs leading-5 text-slate-400">输入真实品牌资料，生成结果会更贴近您的企业。</p>
+          </div>
+          <div class="rounded-xl border border-primary-500/20 bg-primary-500/8 px-3 py-2 text-[10px] text-primary-300">
+            当前行业：<span id="playground-industry">未选择</span>
+          </div>
+        </div>
+
+        <div class="mt-5 grid grid-cols-2 rounded-2xl bg-slate-900/65 p-1.5">
+          <button id="tab-btn-text" onclick="switchPlaygroundTab('text')"
+                  class="rounded-xl bg-slate-800 px-3 py-3 text-xs font-bold text-primary-300 shadow transition">
+            ✍️ 商业文案
+          </button>
+          <button id="tab-btn-image" onclick="switchPlaygroundTab('image')"
+                  class="rounded-xl px-3 py-3 text-xs font-bold text-slate-400 transition hover:text-white">
+            🎨 免费宣传图生成
+          </button>
+        </div>
+
+        <!-- Text panel -->
+        <div id="playground-text-panel" class="mt-6">
+          <div class="mb-4">
+            <p class="mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-500">一键套用示范资料</p>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="fillTemplate('85 Mega Car Care','高端漆面镀晶、深度修复与全车抛光，商会会员本月享专属优惠。')"
+                      class="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-[11px] text-slate-300 transition hover:border-primary-500/50">🚗 汽车美容</button>
+              <button onclick="fillTemplate('甲洞阿福咖喱面','30年古早味咖喱叻沙，自家熬汤，每日下午三点前经常售罄。')"
+                      class="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-[11px] text-slate-300 transition hover:border-primary-500/50">🍲 餐饮</button>
+              <button onclick="fillTemplate('大马好物严选','精选本地咖啡豆与养生产品，西马满额免运并提供送货上门。')"
+                      class="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-[11px] text-slate-300 transition hover:border-primary-500/50">🛍️ 零售</button>
+              <button onclick="fillTemplate('宏图会计与公司注册','提供公司注册、税务申报、年报准备及公司秘书服务。')"
+                      class="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-[11px] text-slate-300 transition hover:border-primary-500/50">👔 专业服务</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-5 lg:grid-cols-[.9fr_1.1fr]">
+            <div class="space-y-4">
+              <div>
+                <label for="ai-brand-name" class="mb-1.5 block text-xs font-bold text-slate-300">商家名称 / 品牌名</label>
+                <input id="ai-brand-name" type="text" maxlength="80" placeholder="例：85 Mega Car Care"
+                       class="focus-ring w-full rounded-xl border border-slate-700 bg-slate-900/70 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-600" />
+              </div>
+
+              <div>
+                <label for="ai-product-desc" class="mb-1.5 block text-xs font-bold text-slate-300">核心卖点 / 产品特色 / 活动</label>
+                <textarea id="ai-product-desc" rows="5" maxlength="500"
+                          placeholder="例：新推出陶瓷镀晶，提供20%优惠，适合新车保护..."
+                          class="focus-ring w-full resize-none rounded-xl border border-slate-700 bg-slate-900/70 px-4 py-3 text-sm leading-6 text-slate-100 placeholder:text-slate-600"></textarea>
+              </div>
+
+              <div>
+                <label for="ai-tone" class="mb-1.5 block text-xs font-bold text-slate-300">文案风格</label>
+                <select id="ai-tone" class="focus-ring w-full rounded-xl border border-slate-700 bg-slate-900/70 px-4 py-3 text-sm text-slate-100">
+                  <option value="professional">专业可信</option>
+                  <option value="friendly">亲切本地化</option>
+                  <option value="humorous">幽默接地气</option>
+                  <option value="urgent">限时促销</option>
+                  <option value="story">品牌故事</option>
+                </select>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label for="ai-platform" class="mb-1.5 block text-xs font-bold text-slate-300">发布平台</label>
+                  <select id="ai-platform" class="focus-ring w-full rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-3 text-sm text-slate-100">
+                    <option>Facebook</option>
+                    <option>Instagram</option>
+                    <option>WhatsApp</option>
+                    <option>TikTok</option>
+                    <option>小红书</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="ai-language" class="mb-1.5 block text-xs font-bold text-slate-300">输出语言</label>
+                  <select id="ai-language" class="focus-ring w-full rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-3 text-sm text-slate-100">
+                    <option value="中文">中文</option>
+                    <option value="马来文">马来文</option>
+                    <option value="英文">英文</option>
+                    <option value="中英双语">中英双语</option>
+                  </select>
+                </div>
+              </div>
+
+              <button id="btn-generate-text" onclick="generateAICopy()"
+                      class="btn-primary focus-ring inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-bold text-white transition">
+                <span id="text-btn-icon">✨</span>
+                <span id="text-btn-label">一键生成宣传文案</span>
+              </button>
+            </div>
+
+            <div class="flex min-h-[430px] flex-col rounded-2xl border border-slate-800 bg-slate-950/55 p-4 md:p-5">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div>
+                  <p class="text-xs font-bold text-primary-400">AI 生成结果</p>
+                  <p class="mt-1 text-[10px] text-slate-600">可继续修改后直接发布</p>
+                </div>
+                <button onclick="copyGeneratedText()" class="rounded-lg px-3 py-2 text-[11px] text-slate-400 transition hover:bg-slate-800 hover:text-white">
+                  📋 复制
+                </button>
+              </div>
+
+              <div id="ai-text-output" class="mt-4 flex-1 whitespace-pre-wrap text-sm leading-7 text-slate-300">
+                填写左边资料后，点击「一键生成宣传文案」。
+              </div>
+
+              <div class="mt-4 grid grid-cols-2 gap-2 border-t border-slate-800 pt-4">
+                <button onclick="regenerateCopy()" class="rounded-xl border border-slate-700 px-3 py-2.5 text-xs font-semibold text-slate-300 transition hover:bg-slate-800">
+                  ↻ 换一个版本
+                </button>
+                <button onclick="useForPoster()" class="rounded-xl border border-amber-500/25 bg-amber-500/10 px-3 py-2.5 text-xs font-semibold text-amber-300 transition hover:bg-amber-500/15">
+                  转成海报概念 →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image panel -->
+        <div id="playground-image-panel" class="mt-6 hidden">
+          <div class="grid grid-cols-1 gap-5 lg:grid-cols-[.9fr_1.1fr]">
+            <div class="space-y-4">
+              <div>
+                <label for="poster-headline" class="mb-1.5 block text-xs font-bold text-slate-300">海报主标题</label>
+                <input id="poster-headline" type="text" maxlength="90" placeholder="例：新车镀晶限时20%优惠"
+                       class="focus-ring w-full rounded-xl border border-slate-700 bg-slate-900/70 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-600" />
+              </div>
+
+              <div>
+                <label for="poster-brief" class="mb-1.5 block text-xs font-bold text-slate-300">想呈现的画面 / 产品</label>
+                <textarea id="poster-brief" rows="5" maxlength="500"
+                          placeholder="例：黑色豪华轿车在灯光明亮的汽车美容店内，车漆有镜面反光..."
+                          class="focus-ring w-full resize-none rounded-xl border border-slate-700 bg-slate-900/70 px-4 py-3 text-sm leading-6 text-slate-100 placeholder:text-slate-600"></textarea>
+              </div>
+
+              <div>
+                <label for="poster-style" class="mb-1.5 block text-xs font-bold text-slate-300">视觉风格</label>
+                <select id="poster-style" class="focus-ring w-full rounded-xl border border-slate-700 bg-slate-900/70 px-4 py-3 text-sm text-slate-100">
+                  <option value="premium">高级商业摄影</option>
+                  <option value="local">大马本地亲切风</option>
+                  <option value="modern">现代简洁广告</option>
+                  <option value="festive">节庆促销风</option>
+                  <option value="bold">强烈促销冲击感</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="poster-format" class="mb-1.5 block text-xs font-bold text-slate-300">使用尺寸</label>
+                <select id="poster-format" class="focus-ring w-full rounded-xl border border-slate-700 bg-slate-900/70 px-4 py-3 text-sm text-slate-100">
+                  <option value="1080x1350">Instagram / Facebook 竖版 4:5</option>
+                  <option value="1080x1080">社交媒体正方形 1:1</option>
+                  <option value="1080x1920">Story / Reels 9:16</option>
+                  <option value="1200x628">Facebook 横版广告</option>
+                </select>
+              </div>
+
+              <button id="btn-generate-poster" onclick="generatePosterConcept()"
+                      class="btn-primary focus-ring inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-bold text-white transition">
+                <span id="poster-btn-icon">🎨</span>
+                <span id="poster-btn-label">免费生成宣传图</span>
+              </button>
+            </div>
+
+            <div class="flex min-h-[430px] flex-col rounded-2xl border border-slate-800 bg-slate-950/55 p-4 md:p-5">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div>
+                  <p class="text-xs font-bold text-amber-400">零成本宣传图结果</p>
+                  <p class="mt-1 text-[10px] text-slate-600">直接在浏览器生成，可预览和下载 PNG</p>
+                </div>
+                <button onclick="copyPosterPrompt()" class="rounded-lg px-3 py-2 text-[11px] text-slate-400 transition hover:bg-slate-800 hover:text-white">
+                  📋 复制
+                </button>
+              </div>
+
+              <div id="poster-preview" class="mt-4 grid flex-1 place-items-center overflow-hidden rounded-2xl border border-dashed border-slate-700 bg-gradient-to-br from-slate-900 to-slate-950 p-6 text-center">
+                <div>
+                  <div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-amber-500/10 text-3xl">🖼️</div>
+                  <p class="mt-4 text-sm font-bold text-slate-300">尚未生成海报方案</p>
+                  <p class="mt-2 text-xs leading-5 text-slate-600">填写左边资料后，AI 会整理版面、配色、文案和图像提示词。</p>
+                </div>
+              </div>
+
+              <div id="poster-output" class="mt-4 hidden whitespace-pre-wrap rounded-xl bg-slate-900/70 p-4 text-xs leading-6 text-slate-300"></div>
+
+              <div id="poster-image-actions" class="mt-4 hidden grid-cols-2 gap-2 border-t border-slate-800 pt-4">
+                <button onclick="downloadGeneratedImage()"
+                        class="rounded-xl border border-primary-500/25 bg-primary-500/10 px-3 py-2.5 text-xs font-semibold text-primary-300 transition hover:bg-primary-500/15">
+                  ⬇ 下载图片
+                </button>
+                <button onclick="generatePosterConcept()"
+                        class="rounded-xl border border-slate-700 px-3 py-2.5 text-xs font-semibold text-slate-300 transition hover:bg-slate-800">
+                  ↻ 重新生成
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-7 flex flex-col-reverse items-stretch justify-between gap-3 border-t border-slate-800 pt-5 sm:flex-row sm:items-center">
+          <button onclick="goToScreen('quiz')" class="rounded-xl px-4 py-3 text-sm font-semibold text-slate-400 transition hover:text-white">
+            返回闯关
+          </button>
+          <button onclick="finishAdventure()"
+                  class="focus-ring rounded-xl border border-amber-500/30 bg-amber-500/10 px-6 py-3 text-sm font-bold text-amber-300 transition hover:bg-amber-500/15">
+            查看我的 AI 转型报告 →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Result -->
+    <section id="screen-result" class="screen hidden w-full">
+      <div class="glass-card mx-auto max-w-4xl overflow-hidden rounded-3xl">
+        <div class="border-b border-slate-800 bg-gradient-to-r from-primary-500/10 to-amber-500/10 p-6 text-center md:p-8">
+          <div class="mx-auto grid h-16 w-16 place-items-center rounded-3xl bg-gradient-to-br from-amber-300 to-amber-600 text-3xl shadow-lg shadow-amber-500/20">🏆</div>
+          <p class="mt-4 text-[11px] font-bold tracking-[.18em] text-amber-300">您的企业 AI 准备指数</p>
+          <div class="mt-2 flex items-end justify-center gap-2">
+            <span id="result-score" class="text-6xl font-black text-white">0</span>
+            <span class="pb-2 text-sm font-bold text-slate-500">/ 100</span>
+          </div>
+          <h3 id="result-level" class="mt-2 text-xl font-extrabold text-primary-300">正在计算...</h3>
+          <p id="result-summary" class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-400"></p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-5 p-5 md:grid-cols-2 md:p-8">
+          <div class="soft-card rounded-2xl p-5">
+            <h4 class="text-sm font-bold text-white">企业画像</h4>
+            <dl class="mt-4 space-y-3 text-xs">
+              <div class="flex justify-between gap-4"><dt class="text-slate-500">公司 / 商家</dt><dd id="result-business-name" class="text-right font-semibold text-slate-200">—</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-slate-500">联系电话</dt><dd id="result-phone" class="text-right font-semibold text-slate-200">—</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-slate-500">行业</dt><dd id="result-industry" class="text-right font-semibold text-slate-200">—</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-slate-500">主要痛点</dt><dd id="result-painpoints" class="max-w-[70%] text-right font-semibold leading-5 text-slate-200">—</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-slate-500">闯关得分</dt><dd id="result-quiz-score" class="text-right font-semibold text-slate-200">—</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-slate-500">已体验工具</dt><dd id="result-tools" class="text-right font-semibold text-slate-200">—</dd></div>
+            </dl>
+          </div>
+
+          <div class="soft-card rounded-2xl p-5">
+            <h4 class="text-sm font-bold text-white">建议优先实行</h4>
+            <ol id="result-actions" class="mt-4 space-y-3 text-xs leading-6 text-slate-300"></ol>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 p-5 md:p-8">
+          <div class="rounded-2xl border border-primary-500/20 bg-primary-500/8 p-5">
+            <h4 class="text-sm font-bold text-primary-300">商会下一步可为您提供</h4>
+            <p class="mt-2 text-xs leading-6 text-slate-400">
+              按您的行业与痛点，安排 AI 文案、图像生成、客服自动化、财务整理或企业流程实战课程。
+            </p>
+            <p class="mt-2 text-xs font-semibold text-slate-300">
+              联系电话：012-692 7880
+            </p>
+            <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+              <a id="whatsapp-link" href="#" target="_blank" rel="noopener noreferrer"
+                 class="btn-primary focus-ring inline-flex flex-1 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold text-white transition">
+                WhatsApp 咨询商会
+              </a>
+              <button onclick="restartAdventure()"
+                      class="focus-ring flex-1 rounded-xl border border-slate-700 px-5 py-3 text-sm font-bold text-slate-300 transition hover:bg-slate-800">
+                再测试一次
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="screen-dashboard" class="screen hidden w-full">
+      <div class="glass-card mx-auto max-w-5xl rounded-3xl p-5 md:p-8">
+        <div class="flex flex-col gap-3 border-b border-slate-800 pb-5 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <span class="text-[11px] font-bold tracking-[.16em] text-amber-400">会长数据面板</span>
+            <h3 class="mt-2 text-xl font-extrabold text-white md:text-2xl">会员 AI 转型需求概览</h3>
+            <p class="mt-1 text-xs text-slate-500">资料会先保存在本机，并通过 Google Apps Script 同步到商会 Google Sheet。</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="exportDashboardCSV()" class="rounded-xl border border-slate-700 px-4 py-2.5 text-xs font-bold text-slate-300 transition hover:bg-slate-800">导出 CSV</button>
+            <button onclick="closeDashboard()" class="rounded-xl border border-slate-700 px-4 py-2.5 text-xs font-bold text-slate-300 transition hover:bg-slate-800">关闭</button>
+          </div>
+        </div>
+
+        <div class="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
+          <div class="soft-card rounded-2xl p-4">
+            <p class="text-[10px] text-slate-500">已登记老板人数</p>
+            <p id="dash-total" class="mt-2 text-2xl font-black text-white">0</p>
+          </div>
+          <div class="soft-card rounded-2xl p-4">
+            <p class="text-[10px] text-slate-500">平均准备指数</p>
+            <p id="dash-average" class="mt-2 text-2xl font-black text-primary-300">0</p>
+          </div>
+          <div class="soft-card rounded-2xl p-4">
+            <p class="text-[10px] text-slate-500">文案体验次数</p>
+            <p id="dash-copy" class="mt-2 text-2xl font-black text-blue-300">0</p>
+          </div>
+          <div class="soft-card rounded-2xl p-4">
+            <p class="text-[10px] text-slate-500">图像生成次数</p>
+            <p id="dash-poster" class="mt-2 text-2xl font-black text-amber-300">0</p>
+          </div>
+        </div>
+
+        <div class="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <div class="soft-card rounded-2xl p-5">
+            <h4 class="text-sm font-bold text-white">行业分布</h4>
+            <div id="dash-industries" class="mt-4 space-y-3"></div>
+          </div>
+          <div class="soft-card rounded-2xl p-5">
+            <h4 class="text-sm font-bold text-white">高频经营痛点</h4>
+            <div id="dash-painpoints" class="mt-4 space-y-3"></div>
+          </div>
+        </div>
+
+        <div class="mt-5 overflow-hidden rounded-2xl border border-slate-800">
+          <div class="border-b border-slate-800 bg-slate-900/70 px-4 py-3">
+            <h4 class="text-xs font-bold text-slate-300">最近体验记录</h4>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[980px] text-left text-xs">
+              <thead class="bg-slate-900/40 text-slate-500">
+                <tr>
+                  <th class="px-4 py-3 font-semibold">时间</th>
+                  <th class="px-4 py-3 font-semibold">公司 / 商家</th>
+                  <th class="px-4 py-3 font-semibold">联系电话</th>
+                  <th class="px-4 py-3 font-semibold">行业</th>
+                  <th class="px-4 py-3 font-semibold">状态</th>
+                  <th class="px-4 py-3 font-semibold">准备指数</th>
+                  <th class="px-4 py-3 font-semibold">主要痛点</th>
+                  <th class="px-4 py-3 font-semibold">体验工具</th>
+                </tr>
+              </thead>
+              <tbody id="dash-records" class="divide-y divide-slate-800 text-slate-300"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="safe-bottom border-t border-slate-800/70 bg-slate-950/30 px-4 py-5 text-center text-[10px] leading-5 text-slate-600">
+    © 2026 吉隆坡甲洞中小型企业商会 · SME AI 转型赋能计划 · 场景图片来自 Unsplash
+  </footer>
+
+  <script>
+    /*
+      API 接口说明：
+      1) 文案接口：POST /api/generate-copy
+         body: { brand, description, tone, platform, language, industry }
+         response: { text: "..." }
+
+      第一阶段图像方案：
+      直接使用浏览器 Canvas 生成宣传图，不调用收费 AI API。
+      图片可即时预览及下载 PNG，适合零成本测试。
+      第二阶段才连接真实 AI 图像生成接口。
+    */
+
+    const API_CONFIG = {
+      copyEndpoint: '/api/generate-copy',
+      posterEndpoint: '/api/generate-poster',
+      leadsEndpoint: 'https://script.google.com/macros/s/AKfycbwsgCrPaB1I_glWncM_PHnVsqHtDNfwB8xtM9tw3LilwOpQiITEvEQCpKIFEl-w6CX0Tg/exec',
+      requestTimeout: 18000
+    };
+
+    const state = {
+      currentScreen: 'welcome',
+      previousScreen: 'welcome',
+      industry: '',
+      businessName: '',
+      phone: '',
+      leadId: '',
+      painpoints: [],
+      quizIndex: 0,
+      quizScore: 0,
+      quizAnswered: false,
+      quizAnswers: [],
+      generatedCopy: '',
+      posterPrompt: '',
+      generatedImageUrl: '',
+      usedCopyTool: false,
+      usedPosterTool: false
+    };
+
+    const industryVisuals = {
+      '汽车美容与后市场': { image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=82', emoji: '🚗' },
+      '餐饮与食品': { image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=82', emoji: '🍲' },
+      '零售与商贸': { image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=82', emoji: '🛍️' },
+      '专业咨询服务': { image: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=82', emoji: '👔' },
+      '物流与制造业': { image: 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1200&q=82', emoji: '🏭' },
+      '其他领域': { image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=82', emoji: '💡' }
+    };
+
+    const industryQuestionSets = {
+      '汽车美容与后市场': [
+        {
+          tag: '场景 1：顾客询价',
+          category: '客户成交',
+          context: '星期日晚上一位顾客发送车款照片，询问镀晶、抛光和内饰清洁的价格。',
+          question: '您现在通常如何处理这种需要先了解车况才能报价的询问？',
+          options: [
+            { text: '等明天有空才回复，先让顾客等待', score: 4, kind: 'weak' },
+            { text: '员工用固定价目表回复，但不同车况可能不准确', score: 9, kind: 'mid' },
+            { text: 'AI 先收集车款、年份、车况和预算，再交给员工确认报价', score: 15, kind: 'best' }
+          ],
+          best: 'AI 可以先完成资料收集和初步筛选，员工只需处理已经提供完整资料的高意向顾客。'
+        },
+        {
+          tag: '场景 2：宣传内容',
+          category: '营销获客',
+          context: '店里每天都有漂亮的施工前后照片，但员工忙完后很少整理和发布。',
+          question: '怎样把这些照片更稳定地变成 Facebook、Instagram 和小红书内容？',
+          options: [
+            { text: '想到才发，照片长期放在员工手机里', score: 4, kind: 'weak' },
+            { text: '每个月请设计师统一做几张海报', score: 9, kind: 'mid' },
+            { text: 'AI 按照片自动生成标题、卖点、标签和多个平台版本', score: 15, kind: 'best' }
+          ],
+          best: '将施工照片、车型和服务项目放进固定模板，AI 就能持续产出内容，而不是每次从零开始。'
+        },
+        {
+          tag: '场景 3：预约管理',
+          category: '营运效率',
+          context: '周末预约很满，但顾客临时迟到或没有出现，导致员工和洗车位空等。',
+          question: '您会如何减少预约失约并提高洗车位使用率？',
+          options: [
+            { text: '顾客没来就算了，继续等下一位', score: 4, kind: 'weak' },
+            { text: '员工在预约前手动逐个 WhatsApp 提醒', score: 9, kind: 'mid' },
+            { text: '系统自动提醒、确认预约，并把取消时段马上开放给候补顾客', score: 15, kind: 'best' }
+          ],
+          best: '自动确认与候补机制能够直接减少空档，也不需要员工反复追问顾客。'
+        },
+        {
+          tag: '场景 4：检查与报价',
+          category: '标准化',
+          context: '不同员工检查车漆和内饰时，记录方式不同，最终报价也可能不一致。',
+          question: '怎样让检查和报价更专业、更统一？',
+          options: [
+            { text: '继续靠有经验员工目测和记忆', score: 4, kind: 'weak' },
+            { text: '准备纸本检查表，让员工手写', score: 9, kind: 'mid' },
+            { text: '用手机拍照和勾选检查项目，AI 整理车况报告及建议服务', score: 15, kind: 'best' }
+          ],
+          best: '标准检查表加照片记录，可以减少漏项，让顾客更容易理解为什么需要某项服务。'
+        },
+        {
+          tag: '场景 5：旧客回流',
+          category: '客户关系',
+          context: '很多顾客做完镀晶或护理后，没有在适当时间回来保养。',
+          question: '如何让旧顾客在正确时间再次回店？',
+          options: [
+            { text: '等待顾客自己想起再回来', score: 4, kind: 'weak' },
+            { text: '员工偶尔翻旧聊天记录联络顾客', score: 9, kind: 'mid' },
+            { text: '按服务日期自动计算保养周期，并发送个性化提醒和优惠', score: 15, kind: 'best' }
+          ],
+          best: 'AI 和自动化最适合处理有明确周期的回访，例如镀晶检查、打蜡和内饰保养。'
+        },
+        {
+          tag: '场景 6：用品库存',
+          category: '库存采购',
+          context: '药水、毛巾、镀膜剂和零件种类越来越多，缺货时才临时购买。',
+          question: '怎样减少缺货和不必要囤货？',
+          options: [
+            { text: '员工看到快用完才告诉老板', score: 4, kind: 'weak' },
+            { text: '每月底人工点算一次', score: 9, kind: 'mid' },
+            { text: '根据每日用量、预约量和安全库存自动给出补货建议', score: 15, kind: 'best' }
+          ],
+          best: '把服务项目和耗材用量关联起来，就能按照未来预约预测用量，而不只是看目前剩多少。'
+        }
+      ],
+
+      '餐饮与食品': [
+        {
+          tag: '场景 1：订位与外卖',
+          category: '客户成交',
+          context: '午餐和晚餐前，WhatsApp 同时收到订位、菜单、外卖和营业时间询问。',
+          question: '您现在如何避免回复太慢或漏掉订单？',
+          options: [
+            { text: '忙完手上的事再逐个回复', score: 4, kind: 'weak' },
+            { text: '安排一位员工专门看手机', score: 9, kind: 'mid' },
+            { text: 'AI 先回答菜单、时间和地点，并把订位或订单整理给员工确认', score: 15, kind: 'best' }
+          ],
+          best: 'AI 可以先处理重复问题，但付款、改餐和特殊要求仍交由员工最终确认。'
+        },
+        {
+          tag: '场景 2：每日宣传',
+          category: '营销获客',
+          context: '每天都有招牌菜和限量菜，但老板没有时间想贴文，也不知道要拍什么。',
+          question: '怎样持续做出让附近顾客想来吃的内容？',
+          options: [
+            { text: '偶尔拍一张菜品照片直接发布', score: 4, kind: 'weak' },
+            { text: '节庆时才请人设计广告', score: 9, kind: 'mid' },
+            { text: 'AI 根据菜品、天气、时段和库存生成当天贴文与图片方向', score: 15, kind: 'best' }
+          ],
+          best: '餐饮内容要及时。把今日主打、剩余数量和营业时段输入模板，几分钟就能完成发布。'
+        },
+        {
+          tag: '场景 3：食材成本',
+          category: '成本控制',
+          context: '供应商价格经常变化，老板很难马上知道哪一道菜的毛利已经下降。',
+          question: '怎样更早发现菜单成本问题？',
+          options: [
+            { text: '月底看总利润才判断', score: 4, kind: 'weak' },
+            { text: '有空时手动更新 Excel 成本', score: 9, kind: 'mid' },
+            { text: '扫描供应商账单，自动更新原料成本并提醒低毛利菜品', score: 15, kind: 'best' }
+          ],
+          best: 'AI 先读取账单，系统再按配方计算成本，老板只看异常变动和需要调整的菜单。'
+        },
+        {
+          tag: '场景 4：浪费与缺货',
+          category: '库存采购',
+          context: '有些食材卖不完报废，有些招牌菜却在高峰期突然缺货。',
+          question: '怎样让备货更接近真实需求？',
+          options: [
+            { text: '继续凭经验每天估算', score: 4, kind: 'weak' },
+            { text: '参考昨天销量准备', score: 9, kind: 'mid' },
+            { text: '结合星期、天气、节庆、预订和历史销量预测备货量', score: 15, kind: 'best' }
+          ],
+          best: '预测不必百分百准确，只要比单纯凭感觉更稳定，就能同时减少浪费和缺货。'
+        },
+        {
+          tag: '场景 5：顾客评价',
+          category: '品牌口碑',
+          context: 'Google 和 Facebook 出现好评、投诉和误解，老板没有时间逐一回复。',
+          question: '应该怎样更专业地处理评价？',
+          options: [
+            { text: '只回复五星好评，负评不理会', score: 4, kind: 'weak' },
+            { text: '员工用固定一句话回复所有评价', score: 9, kind: 'mid' },
+            { text: 'AI 按评价内容起草不同语气回复，投诉由负责人审核后发送', score: 15, kind: 'best' }
+          ],
+          best: '好评需要感谢，投诉需要理解和补救。AI 可以起草，但涉及赔偿和争议仍由负责人决定。'
+        },
+        {
+          tag: '场景 6：员工标准',
+          category: '培训 SOP',
+          context: '不同厨师和员工做法不同，新人经常重复问份量、流程和卫生标准。',
+          question: '怎样让员工更快按照统一标准工作？',
+          options: [
+            { text: '做错后再由主管纠正', score: 4, kind: 'weak' },
+            { text: '把食谱和流程打印出来贴墙', score: 9, kind: 'mid' },
+            { text: '把图文 SOP、短视频和常见问题整理成手机知识助手', score: 15, kind: 'best' }
+          ],
+          best: '员工能在工作现场用手机查询步骤，主管就不必每天重复回答同样问题。'
+        }
+      ],
+
+      '零售与商贸': [
+        {
+          tag: '场景 1：产品询问',
+          category: '客户成交',
+          context: '顾客不断询问尺寸、颜色、库存、保固和送货费，问题高度重复。',
+          question: '怎样提高回复速度又避免答错库存？',
+          options: [
+            { text: '员工看到信息才逐个查询和回复', score: 4, kind: 'weak' },
+            { text: '准备一份固定 FAQ 给员工复制', score: 9, kind: 'mid' },
+            { text: 'AI 连接产品资料和库存，只回答有依据的问题并转交复杂询问', score: 15, kind: 'best' }
+          ],
+          best: '零售客服必须连接最新产品和库存资料，不能让 AI 凭空猜测。'
+        },
+        {
+          tag: '场景 2：商品内容',
+          category: '营销获客',
+          context: '新品很多，每个商品都要写标题、卖点、规格和不同平台描述。',
+          question: '怎样减少重复写作时间？',
+          options: [
+            { text: '供应商给什么文字就直接使用', score: 4, kind: 'weak' },
+            { text: '员工逐个产品重新整理', score: 9, kind: 'mid' },
+            { text: 'AI 根据规格表批量生成各平台标题、卖点和双语描述', score: 15, kind: 'best' }
+          ],
+          best: '先固定品牌语气和字段模板，AI 就能批量生成，同时保留人工检查规格和价格。'
+        },
+        {
+          tag: '场景 3：促销选品',
+          category: '营运分析',
+          context: '仓库里有慢销品，但热门品又经常断货，促销通常凭感觉决定。',
+          question: '怎样选择更有效的促销商品？',
+          options: [
+            { text: '选择老板想清掉的商品', score: 4, kind: 'weak' },
+            { text: '查看总销量最高和最低的商品', score: 9, kind: 'mid' },
+            { text: '分析毛利、库存天数、连带购买和顾客分群后推荐促销组合', score: 15, kind: 'best' }
+          ],
+          best: '好的促销不只是清库存，还要保护毛利，并用热门品带动慢销品。'
+        },
+        {
+          tag: '场景 4：补货预测',
+          category: '库存采购',
+          context: '节庆和发薪日前后销量变化很大，固定补货数量经常不适用。',
+          question: '怎样减少缺货和积压？',
+          options: [
+            { text: '快卖完才向供应商补货', score: 4, kind: 'weak' },
+            { text: '每周按固定数量补货', score: 9, kind: 'mid' },
+            { text: '按销量趋势、交货时间、活动和安全库存自动建议订购量', score: 15, kind: 'best' }
+          ],
+          best: '补货建议必须考虑供应商交货时间，否则即使发现缺货也来不及。'
+        },
+        {
+          tag: '场景 5：顾客回购',
+          category: '客户关系',
+          context: '店里有很多旧顾客电话，但没有系统区分新客、常客和沉睡顾客。',
+          question: '怎样让促销信息更相关，而不是全部人收到一样内容？',
+          options: [
+            { text: '每次促销都发给所有顾客', score: 4, kind: 'weak' },
+            { text: '员工凭印象选择一些熟客', score: 9, kind: 'mid' },
+            { text: '按购买记录、品类和最后购买时间分群，再生成不同讯息', score: 15, kind: 'best' }
+          ],
+          best: '先做顾客分群，再做个性化内容，通常比大量发送同一广告更有效。'
+        },
+        {
+          tag: '场景 6：供应商资料',
+          category: '财务采购',
+          context: '订单、送货单和供应商账单分散在 WhatsApp、纸张和 Excel。',
+          question: '怎样更容易核对价格、数量和付款期限？',
+          options: [
+            { text: '月底才把全部文件找出来核对', score: 4, kind: 'weak' },
+            { text: '由员工逐张输入表格', score: 9, kind: 'mid' },
+            { text: '扫描文件自动提取资料，系统对比 PO、收货和账单异常', score: 15, kind: 'best' }
+          ],
+          best: 'AI 负责读取文件，系统规则负责对比数字，两者结合才能减少错误付款。'
+        }
+      ],
+
+      '专业咨询服务': [
+        {
+          tag: '场景 1：新客户询问',
+          category: '客户筛选',
+          context: '新客户只说“想注册公司”或“想报税”，员工需要来回询问很多次。',
+          question: '怎样更快了解客户需求并安排正确顾问？',
+          options: [
+            { text: '让客户直接预约，再由顾问慢慢了解', score: 4, kind: 'weak' },
+            { text: '员工用固定问卷逐题询问', score: 9, kind: 'mid' },
+            { text: 'AI 对话收集公司类型、期限、文件和预算，再整理摘要给顾问', score: 15, kind: 'best' }
+          ],
+          best: 'AI 先做需求访谈，可以减少顾问花时间询问基础资料。'
+        },
+        {
+          tag: '场景 2：报价与提案',
+          category: '文档效率',
+          context: '每次服务提案结构相似，但仍要修改客户背景、范围、费用和时间线。',
+          question: '怎样更快做出专业提案？',
+          options: [
+            { text: '复制旧提案后逐段修改', score: 4, kind: 'weak' },
+            { text: '准备几个 Word 模板给员工套用', score: 9, kind: 'mid' },
+            { text: 'AI 根据访谈摘要生成初稿，再由顾问审核范围、风险和收费', score: 15, kind: 'best' }
+          ],
+          best: '专业服务不能直接发送未经审核的 AI 提案，但可以让 AI 完成结构和第一版内容。'
+        },
+        {
+          tag: '场景 3：文件阅读',
+          category: '知识工作',
+          context: '客户发送很多合约、报表、会议记录或政策文件，需要快速找出重点。',
+          question: '怎样减少阅读和整理时间？',
+          options: [
+            { text: '顾问从第一页开始全部阅读', score: 4, kind: 'weak' },
+            { text: '让助理先做摘要', score: 9, kind: 'mid' },
+            { text: 'AI 按指定问题提取重点、风险和待确认事项，顾问再查原文', score: 15, kind: 'best' }
+          ],
+          best: 'AI 摘要用于提高速度，但重要判断必须回到原文件和专业人员审核。'
+        },
+        {
+          tag: '场景 4：期限管理',
+          category: '客户服务',
+          context: '报税、执照、年报和合约都有不同截止日期，漏掉会影响客户。',
+          question: '怎样更主动地管理期限？',
+          options: [
+            { text: '顾问自己记在日历里', score: 4, kind: 'weak' },
+            { text: '助理每周检查 Excel', score: 9, kind: 'mid' },
+            { text: '系统按客户和服务自动建立期限、文件清单与多阶段提醒', score: 15, kind: 'best' }
+          ],
+          best: '期限型服务最适合自动化，因为触发条件、负责人和提醒时间都可以明确设定。'
+        },
+        {
+          tag: '场景 5：企业知识',
+          category: '培训 SOP',
+          context: '资深顾问知道很多处理方法，但新人找不到资料，只能不断询问。',
+          question: '怎样保留和传承团队经验？',
+          options: [
+            { text: '让新人边做边问', score: 4, kind: 'weak' },
+            { text: '把文件放进共享文件夹', score: 9, kind: 'mid' },
+            { text: '整理案例、模板和 SOP，让 AI 知识助手引用内部资料回答', score: 15, kind: 'best' }
+          ],
+          best: '关键不是把文件全部丢给 AI，而是分类、授权，并要求答案引用内部来源。'
+        },
+        {
+          tag: '场景 6：客户报告',
+          category: '数据沟通',
+          context: '每月要把大量数字、进度和问题整理成客户看得懂的报告。',
+          question: '怎样提高报告质量又节省时间？',
+          options: [
+            { text: '复制上个月报告再修改数字', score: 4, kind: 'weak' },
+            { text: '由助理整理，顾问再大幅修改', score: 9, kind: 'mid' },
+            { text: '系统汇总数据，AI 起草结论、风险和行动项，顾问最终确认', score: 15, kind: 'best' }
+          ],
+          best: '自动汇总数据后，AI 才能帮助解释变化；不能只依靠 AI 猜测数字原因。'
+        }
+      ],
+
+      '物流与制造业': [
+        {
+          tag: '场景 1：交货延误',
+          category: '客户沟通',
+          context: '订单延误时，销售、仓库和司机掌握的资料不同，顾客不断追问。',
+          question: '怎样给顾客更及时、统一的进度？',
+          options: [
+            { text: '顾客追问后才逐个部门确认', score: 4, kind: 'weak' },
+            { text: '每天由员工整理一次进度表', score: 9, kind: 'mid' },
+            { text: '系统汇总生产、仓库和运输状态，AI 自动起草异常通知', score: 15, kind: 'best' }
+          ],
+          best: 'AI 负责解释和沟通，真实状态必须来自生产、仓库和运输系统。'
+        },
+        {
+          tag: '场景 2：机器与品质',
+          category: '异常处理',
+          context: '设备故障或品质问题发生后，维修记录和原因分析分散，类似问题重复出现。',
+          question: '怎样更快找到可能原因？',
+          options: [
+            { text: '依靠资深员工经验判断', score: 4, kind: 'weak' },
+            { text: '每次故障后填写纸本报告', score: 9, kind: 'mid' },
+            { text: '集中故障、批次、参数和维修记录，由 AI 找出相似案例供工程师判断', score: 15, kind: 'best' }
+          ],
+          best: 'AI 可以帮助找相似模式，但机器安全和维修决定必须由合格人员负责。'
+        },
+        {
+          tag: '场景 3：报价与用料',
+          category: '成本报价',
+          context: '客户要求快速报价，但材料、工时、运输和损耗计算复杂。',
+          question: '怎样加快报价同时保护利润？',
+          options: [
+            { text: '先给大概价格，确认订单后再算', score: 4, kind: 'weak' },
+            { text: '复制相似订单的旧报价', score: 9, kind: 'mid' },
+            { text: '系统读取规格和 BOM，AI 整理报价说明并提醒异常成本', score: 15, kind: 'best' }
+          ],
+          best: '价格计算应由明确公式和最新成本完成，AI 适合整理内容和提示缺漏。'
+        },
+        {
+          tag: '场景 4：原料库存',
+          category: '库存采购',
+          context: '不同订单共用原料，采购过多占用现金，采购不足又影响生产。',
+          question: '怎样做出更合理的采购建议？',
+          options: [
+            { text: '仓库看到不够才临时采购', score: 4, kind: 'weak' },
+            { text: '按过去平均用量采购', score: 9, kind: 'mid' },
+            { text: '结合订单、BOM、现有库存、损耗和交货期计算需求', score: 15, kind: 'best' }
+          ],
+          best: '制造采购要从订单和 BOM 推算，而不是只看过去平均用量。'
+        },
+        {
+          tag: '场景 5：SOP 与安全',
+          category: '培训 SOP',
+          context: '新员工面对机器操作、品质检查和安全流程时，很难一次记住全部步骤。',
+          question: '怎样让员工在现场获得正确指引？',
+          options: [
+            { text: '由主管口头重复说明', score: 4, kind: 'weak' },
+            { text: '把厚厚的手册放在办公室', score: 9, kind: 'mid' },
+            { text: '将授权 SOP、图片和短视频做成岗位知识助手，并记录查阅', score: 15, kind: 'best' }
+          ],
+          best: '安全内容必须使用已批准版本，并清楚限制 AI 不得自行改变操作标准。'
+        },
+        {
+          tag: '场景 6：营运报告',
+          category: '管理决策',
+          context: '老板要同时查看产量、废品率、准时交货、加班和库存，但资料来自不同表格。',
+          question: '怎样让老板更快看见真正需要处理的问题？',
+          options: [
+            { text: '月底由各部门做 PowerPoint 汇报', score: 4, kind: 'weak' },
+            { text: '每周人工合并 Excel', score: 9, kind: 'mid' },
+            { text: '建立统一仪表板，并由 AI 每日摘要异常、原因和负责人', score: 15, kind: 'best' }
+          ],
+          best: '老板需要的是少量异常和行动项，而不是更多表格。AI 摘要必须连接统一指标定义。'
+        }
+      ],
+
+      '其他领域': [
+        {
+          tag: '场景 1：客户询问',
+          category: '客户成交',
+          context: '每天都会出现重复的价格、地点、营业时间和服务范围问题。',
+          question: '您怎样处理这些重复询问？',
+          options: [
+            { text: '有空时才回复', score: 4, kind: 'weak' },
+            { text: '准备固定文字让员工复制', score: 9, kind: 'mid' },
+            { text: 'AI 先回答常见问题，并把复杂或高意向顾客转给员工', score: 15, kind: 'best' }
+          ],
+          best: '最适合先自动化的是重复、高频、答案明确的问题。'
+        },
+        {
+          tag: '场景 2：宣传内容',
+          category: '营销获客',
+          context: '老板知道产品很好，但不知道怎样持续写出顾客看得懂的内容。',
+          question: '怎样让内容生产更稳定？',
+          options: [
+            { text: '想到才发布', score: 4, kind: 'weak' },
+            { text: '重要节日才请设计师制作', score: 9, kind: 'mid' },
+            { text: '建立品牌模板，让 AI 按产品、顾客和平台生成多个版本', score: 15, kind: 'best' }
+          ],
+          best: '先固定品牌语气、顾客类型和行动目标，AI 的输出会更稳定。'
+        },
+        {
+          tag: '场景 3：文件与行政',
+          category: '文档效率',
+          context: '报价、会议记录、表格和报告占用了大量时间。',
+          question: '您会从哪里开始使用 AI？',
+          options: [
+            { text: '继续全部手动完成', score: 4, kind: 'weak' },
+            { text: '让员工复制旧文件修改', score: 9, kind: 'mid' },
+            { text: '从固定格式的摘要、分类和初稿开始，再由负责人审核', score: 15, kind: 'best' }
+          ],
+          best: '从低风险文档开始，最容易衡量节省了多少时间。'
+        },
+        {
+          tag: '场景 4：员工培训',
+          category: '培训 SOP',
+          context: '员工常常重复问同样问题，老板和主管需要不断解释。',
+          question: '怎样减少重复培训？',
+          options: [
+            { text: '继续由主管口头说明', score: 4, kind: 'weak' },
+            { text: '把资料放进共享文件夹', score: 9, kind: 'mid' },
+            { text: '把批准的 SOP 和常见问题整理成可搜索的 AI 知识助手', score: 15, kind: 'best' }
+          ],
+          best: 'AI 知识助手的基础是清楚、最新和经过批准的内部资料。'
+        },
+        {
+          tag: '场景 5：经营数据',
+          category: '管理决策',
+          context: '资料很多，但老板仍然不知道今天最需要处理什么。',
+          question: '怎样让数据真正帮助决策？',
+          options: [
+            { text: '有问题时才查看报表', score: 4, kind: 'weak' },
+            { text: '每周由员工汇总数字', score: 9, kind: 'mid' },
+            { text: '统一关键指标，让 AI 只摘要异常、原因和下一步行动', score: 15, kind: 'best' }
+          ],
+          best: 'AI 摘要不是越长越好，老板最需要的是异常、影响和负责人。'
+        },
+        {
+          tag: '场景 6：开始转型',
+          category: '执行策略',
+          context: '企业有很多问题，但预算和员工时间有限，不可能一次改变全部流程。',
+          question: '最稳妥的 AI 转型方式是什么？',
+          options: [
+            { text: '先购买最贵、功能最多的系统', score: 4, kind: 'weak' },
+            { text: '每个部门各自尝试不同工具', score: 9, kind: 'mid' },
+            { text: '选择一个高频、低风险、可衡量的流程做 30 天试点', score: 15, kind: 'best' }
+          ],
+          best: '先通过小试点证明价值，再扩大到其他流程，通常更容易获得员工支持。'
+        }
+      ]
+    };
+
+    function getActiveQuizQuestions() {
+      return industryQuestionSets[state.industry] || industryQuestionSets['其他领域'];
+    }
+
+    const resultActionsMap = {
+      '写宣传文案、发社交媒体': '建立每周 AI 内容模板：一次生成 5–7 个贴文版本，再由员工审核发布。',
+      '做广告海报、宣传图设计': '建立品牌海报模板：固定 Logo、颜色、字体和版位，让 AI 只负责变化内容。',
+      '客户回复太慢、容易漏单': '先整理 20 个最常见客户问题，再部署 FAQ 自动回复或 AI 客服。',
+      '日常记账分类、对数太繁琐': '从账单扫描、自动分类和异常核对开始，保留人工最终确认。',
+      '员工培训与流程不统一': '把 SOP、常见问题、培训视频和标准答案整理为企业知识库。',
+      '库存、采购与营运分析': '先统一库存单位与关键数据，再用 AI 做缺货提醒和采购建议。'
+    };
+
+    function showToast(message, icon = '✨') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = message;
+      document.getElementById('toast-icon').textContent = icon;
+      toast.classList.remove('opacity-0', 'translate-y-[-16px]', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[-16px]', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2600);
+    }
+
+    function getScreens() {
+      return ['welcome', 'profile', 'quiz', 'playground', 'result', 'dashboard'];
+    }
+
+    function goToScreen(name) {
+      if (!getScreens().includes(name)) return;
+
+      state.previousScreen = state.currentScreen;
+      state.currentScreen = name;
+
+      getScreens().forEach(screen => {
+        const el = document.getElementById(`screen-${screen}`);
+        if (!el) return;
+        el.classList.toggle('hidden', screen !== name);
+        if (screen === name) {
+          el.classList.remove('screen');
+          requestAnimationFrame(() => el.classList.add('screen'));
+        }
+      });
+
+      const stepRail = document.getElementById('step-rail');
+      stepRail.classList.toggle('hidden', ['welcome', 'dashboard'].includes(name));
+      updateStepRail(name);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateStepRail(current) {
+      const order = ['profile', 'quiz', 'playground', 'result'];
+      const currentIndex = order.indexOf(current);
+
+      document.querySelectorAll('.step-pill').forEach(pill => {
+        const step = pill.dataset.step;
+        const index = order.indexOf(step);
+        const active = step === current;
+        const done = currentIndex > index;
+
+        pill.classList.toggle('border-primary-500/40', active || done);
+        pill.classList.toggle('bg-primary-500/10', active);
+        pill.classList.toggle('text-primary-300', active || done);
+        pill.classList.toggle('border-slate-800', !(active || done));
+
+        const dot = pill.querySelector('span');
+        dot.textContent = done ? '✓' : String(index + 1);
+        dot.classList.toggle('bg-primary-500', active || done);
+        dot.classList.toggle('text-white', active || done);
+        dot.classList.toggle('bg-slate-800', !(active || done));
+      });
+    }
+
+    function startAdventure() {
+      goToScreen('profile');
+    }
+
+    function selectIndustry(industry, button) {
+      state.industry = industry;
+      document.querySelectorAll('.industry-card').forEach(card => card.classList.remove('selected'));
+      button.classList.add('selected');
+      showToast(`已选择：${industry}`, '✅');
+    }
+
+    function normalizeMalaysiaPhone(value) {
+      const digits = String(value || '').replace(/\D/g, '');
+      if (!digits) return '';
+      if (digits.startsWith('60')) return digits;
+      if (digits.startsWith('0')) return `60${digits.slice(1)}`;
+      if (digits.startsWith('1')) return `60${digits}`;
+      return digits;
+    }
+
+    function isValidMalaysiaPhone(value) {
+      const digits = String(value || '').replace(/\D/g, '');
+      return /^(?:60|0)?1\d{8,9}$/.test(digits);
+    }
+
+    function formatPhone(value) {
+      const normalized = normalizeMalaysiaPhone(value);
+      if (!normalized.startsWith('60')) return value || '—';
+      const local = `0${normalized.slice(2)}`;
+      if (local.length === 10) return `${local.slice(0, 3)}-${local.slice(3, 6)} ${local.slice(6)}`;
+      if (local.length === 11) return `${local.slice(0, 3)}-${local.slice(3, 7)} ${local.slice(7)}`;
+      return local;
+    }
+
+    function validatePhoneField() {
+      const input = document.getElementById('owner-phone');
+      const help = document.getElementById('phone-help');
+      const value = input.value.trim();
+
+      input.classList.remove('phone-valid', 'phone-invalid');
+
+      if (!value) {
+        help.textContent = '仅用于商会联系、发送测试报告或课程资料。';
+        help.className = 'mt-1.5 text-[10px] text-slate-500';
+        return false;
+      }
+
+      const valid = isValidMalaysiaPhone(value);
+      input.classList.add(valid ? 'phone-valid' : 'phone-invalid');
+      help.textContent = valid ? `将记录为：${formatPhone(value)}` : '请输入有效的大马手机号码，例如 012-692 7880。';
+      help.className = valid
+        ? 'mt-1.5 text-[10px] text-primary-400'
+        : 'mt-1.5 text-[10px] text-rose-400';
+
+      return valid;
+    }
+
+
+    function setProfileSubmitLoading(loading) {
+      const button = document.getElementById('profile-submit-btn');
+      if (!button) return;
+
+      button.disabled = loading;
+      button.classList.toggle('opacity-70', loading);
+      button.innerHTML = loading
+        ? '<span class="animate-pulse">正在检查电话号码...</span>'
+        : '开始行业专属测试 <span>→</span>';
+    }
+
+    function checkPhoneAvailability(phone) {
+      return new Promise((resolve, reject) => {
+        const endpoint = String(API_CONFIG.leadsEndpoint || '').trim();
+
+        if (
+          !endpoint.startsWith('https://script.google.com/macros/s/') ||
+          !endpoint.endsWith('/exec')
+        ) {
+          reject(new Error('Google Sheets 检查接口尚未设置'));
+          return;
+        }
+
+        const callbackName = `klkPhoneCheck_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
+        const script = document.createElement('script');
+        const timeout = window.setTimeout(() => {
+          cleanup();
+          reject(new Error('电话号码检查超时'));
+        }, 10000);
+
+        function cleanup() {
+          window.clearTimeout(timeout);
+          delete window[callbackName];
+          script.remove();
+        }
+
+        window[callbackName] = result => {
+          cleanup();
+          resolve(result || {});
+        };
+
+        const query = new URLSearchParams({
+          action: 'checkPhone',
+          phone,
+          callback: callbackName,
+          _: String(Date.now())
+        });
+
+        script.src = `${endpoint}?${query.toString()}`;
+        script.async = true;
+        script.onerror = () => {
+          cleanup();
+          reject(new Error('无法连接 Google Sheets'));
+        };
+
+        document.head.appendChild(script);
+      });
+    }
+
+    async function submitProfile() {
+      const phoneInput = document.getElementById('owner-phone');
+      const selectedPainpoints = [...document.querySelectorAll('input[name="painpoint"]:checked')].map(input => input.value);
+      const consent = document.getElementById('data-consent').checked;
+
+      if (!state.industry) {
+        showToast('请先选择您的行业', '🏢');
+        return;
+      }
+
+      if (!isValidMalaysiaPhone(phoneInput.value)) {
+        validatePhoneField();
+        phoneInput.focus();
+        showToast('请输入有效的老板联系电话', '📱');
+        return;
+      }
+
+      if (!selectedPainpoints.length) {
+        showToast('请至少选择一个经营痛点', '💡');
+        return;
+      }
+
+      if (!consent) {
+        showToast('请先同意资料记录说明', '🔒');
+        return;
+      }
+
+      const phone = normalizeMalaysiaPhone(phoneInput.value);
+
+      // 本机先检查，减少不必要的网络请求。
+      const localDuplicate = getLeads().some(
+        item => normalizeMalaysiaPhone(item.phone) === phone
+      );
+
+      if (localDuplicate) {
+        phoneInput.classList.add('phone-invalid');
+        document.getElementById('phone-help').textContent =
+          '这个电话号码已经参加过测试，每个号码只允许一次。';
+        document.getElementById('phone-help').className =
+          'mt-1.5 text-[10px] text-rose-400';
+        showToast('这个电话号码已经参加过测试', '⛔');
+        return;
+      }
+
+      setProfileSubmitLoading(true);
+
+      try {
+        const availability = await checkPhoneAvailability(phone);
+
+        if (availability.exists || availability.available === false) {
+          phoneInput.classList.add('phone-invalid');
+          document.getElementById('phone-help').textContent =
+            '这个电话号码已经参加过测试，每个号码只允许一次。';
+          document.getElementById('phone-help').className =
+            'mt-1.5 text-[10px] text-rose-400';
+          showToast('这个电话号码已经登记，不能重复参加', '⛔');
+          return;
+        }
+
+        state.businessName = document.getElementById('business-name').value.trim();
+        state.phone = phone;
+        state.leadId = crypto.randomUUID
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random()}`;
+        state.painpoints = selectedPainpoints;
+        state.quizIndex = 0;
+        state.quizScore = 0;
+        state.quizAnswered = false;
+        state.quizAnswers = [];
+
+        await saveLeadRecord('started');
+        renderQuiz();
+        goToScreen('quiz');
+      } catch (error) {
+        showToast('暂时无法验证电话号码，请检查网络后重试', '⚠️');
+      } finally {
+        setProfileSubmitLoading(false);
+      }
+    }
+
+    function renderQuiz() {
+      const questions = getActiveQuizQuestions();
+      const q = questions[state.quizIndex];
+      const progress = ((state.quizIndex + 1) / questions.length) * 100;
+      const visual = industryVisuals[state.industry] || industryVisuals['其他领域'];
+
+      document.getElementById('quiz-industry-label').textContent = state.industry;
+      document.getElementById('quiz-progress-text').textContent = `问题 ${state.quizIndex + 1} / ${questions.length}`;
+      document.getElementById('quiz-progress-bar').style.width = `${progress}%`;
+      document.getElementById('quiz-scenario-tag').textContent = q.tag;
+      document.getElementById('quiz-category').textContent = q.category;
+      document.getElementById('quiz-context').textContent = q.context;
+      document.getElementById('quiz-question-title').textContent = q.question;
+
+      const visualElement = document.getElementById('quiz-visual');
+      visualElement.style.backgroundImage = `
+        linear-gradient(to top, rgba(4,10,22,.96), rgba(4,10,22,.12)),
+        url("${visual.image}")
+      `;
+
+      const options = document.getElementById('quiz-options-container');
+      options.innerHTML = q.options.map((option, index) => `
+        <button type="button"
+                onclick="answerQuiz(${index})"
+                class="choice-card focus-ring group flex w-full items-start gap-3 rounded-2xl border border-slate-700 bg-slate-800/30 p-4 text-left transition hover:border-primary-500/60 hover:bg-slate-800/65 md:p-5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-slate-800 text-xs font-bold text-slate-400 transition group-hover:bg-primary-500/15 group-hover:text-primary-300">
+            ${String.fromCharCode(65 + index)}
+          </span>
+          <span class="pt-1 text-sm font-medium leading-6 text-slate-300">${escapeHtml(option.text)}</span>
+        </button>
+      `).join('');
+
+      document.getElementById('quiz-feedback').classList.add('hidden');
+      document.getElementById('quiz-next-btn').classList.add('hidden');
+      state.quizAnswered = false;
+    }
+
+    function answerQuiz(index) {
+      if (state.quizAnswered) return;
+      state.quizAnswered = true;
+
+      const questions = getActiveQuizQuestions();
+      const q = questions[state.quizIndex];
+      const option = q.options[index];
+      state.quizScore += option.score;
+      state.quizAnswers.push({
+        questionIndex: state.quizIndex,
+        tag: q.tag,
+        category: q.category,
+        selectedIndex: index,
+        selectedText: option.text,
+        score: option.score
+      });
+
+      document.querySelectorAll('.choice-card').forEach((card, cardIndex) => {
+        card.disabled = true;
+        card.classList.toggle('selected', cardIndex === index);
+        card.classList.toggle('opacity-55', cardIndex !== index);
+      });
+
+      const feedback = document.getElementById('quiz-feedback');
+      const title = document.getElementById('quiz-feedback-title');
+      const emoji = document.getElementById('quiz-feedback-emoji');
+      const body = document.getElementById('quiz-feedback-body');
+
+      feedback.className = 'mt-5 rounded-2xl border p-4';
+      if (option.kind === 'best') {
+        feedback.classList.add('border-primary-500/35', 'bg-primary-500/10');
+        title.className = 'text-sm font-bold text-primary-300';
+        title.textContent = '这是较成熟的 AI 转型做法';
+        emoji.textContent = '✅';
+      } else if (option.kind === 'mid') {
+        feedback.classList.add('border-amber-500/35', 'bg-amber-500/10');
+        title.className = 'text-sm font-bold text-amber-300';
+        title.textContent = '可以解决，但仍依赖较多人工';
+        emoji.textContent = '💡';
+      } else {
+        feedback.classList.add('border-rose-500/30', 'bg-rose-500/8');
+        title.className = 'text-sm font-bold text-rose-300';
+        title.textContent = '这是许多 SME 目前的真实情况';
+        emoji.textContent = '🧭';
+      }
+
+      body.textContent = q.best;
+      feedback.classList.remove('hidden');
+
+      const nextBtn = document.getElementById('quiz-next-btn');
+      nextBtn.textContent = state.quizIndex === questions.length - 1 ? '进入 AI 实操 →' : '下一题 →';
+      nextBtn.classList.remove('hidden');
+    }
+
+    function nextQuiz() {
+      if (!state.quizAnswered) return;
+      const questions = getActiveQuizQuestions();
+
+      if (state.quizIndex < questions.length - 1) {
+        state.quizIndex += 1;
+        renderQuiz();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      document.getElementById('playground-industry').textContent = state.industry;
+      prefillIndustryExample();
+      goToScreen('playground');
+      showToast('行业专属题目完成，现在试试真正的 AI 工具', '🎉');
+    }
+
+    function restartCurrentIndustryQuiz() {
+      state.quizIndex = 0;
+      state.quizScore = 0;
+      state.quizAnswered = false;
+      state.quizAnswers = [];
+      renderQuiz();
+      showToast('已重新开始本行业测试', '↻');
+    }
+
+    function prefillIndustryExample() {
+      const examples = {
+        '汽车美容与后市场': ['您的汽车美容品牌', '提供洗车、抛光、镀晶、内饰清洁和漆面修复。'],
+        '餐饮与食品': ['您的餐厅或食品品牌', '介绍招牌菜、营业时间、限时套餐或外卖服务。'],
+        '零售与商贸': ['您的零售品牌', '介绍热卖商品、新品、促销和送货服务。'],
+        '专业咨询服务': ['您的专业服务品牌', '介绍公司注册、会计、税务、法律或顾问服务。'],
+        '物流与制造业': ['您的制造或物流品牌', '介绍生产能力、交货优势、品质和企业客户服务。'],
+        '其他领域': ['您的公司或品牌', '介绍最主要的产品、服务、顾客和当前优惠。']
+      };
+      const [brand, description] = examples[state.industry] || examples['其他领域'];
+      if (!document.getElementById('ai-brand-name').value.trim()) {
+        document.getElementById('ai-brand-name').placeholder = brand;
+      }
+      if (!document.getElementById('ai-product-desc').value.trim()) {
+        document.getElementById('ai-product-desc').placeholder = description;
+      }
+    }
+
+    function switchPlaygroundTab(tab) {
+      const isText = tab === 'text';
+      document.getElementById('playground-text-panel').classList.toggle('hidden', !isText);
+      document.getElementById('playground-image-panel').classList.toggle('hidden', isText);
+
+      const textBtn = document.getElementById('tab-btn-text');
+      const imageBtn = document.getElementById('tab-btn-image');
+
+      textBtn.className = isText
+        ? 'rounded-xl bg-slate-800 px-3 py-3 text-xs font-bold text-primary-300 shadow transition'
+        : 'rounded-xl px-3 py-3 text-xs font-bold text-slate-400 transition hover:text-white';
+
+      imageBtn.className = !isText
+        ? 'rounded-xl bg-slate-800 px-3 py-3 text-xs font-bold text-amber-300 shadow transition'
+        : 'rounded-xl px-3 py-3 text-xs font-bold text-slate-400 transition hover:text-white';
+    }
+
+    function fillTemplate(brand, description) {
+      document.getElementById('ai-brand-name').value = brand;
+      document.getElementById('ai-product-desc').value = description;
+      showToast('示范资料已填入', '✅');
+    }
+
+    function buildLocalCopy({ brand, description, tone, platform, language }) {
+      const toneLead = {
+        professional: '值得信赖的品质，不只是说说而已。',
+        friendly: '甲洞的朋友们，这个好消息一定要告诉你！',
+        humorous: '老板不怕你比较，就怕你还没看到这个优惠。',
+        urgent: '限时开放，错过这次就要再等！',
+        story: '每一家认真经营的本地企业，背后都有一份坚持。'
+      }[tone] || '让更多顾客看见您的价值。';
+
+      if (language === '马来文') {
+        return `${brand}\n\n${tone === 'urgent' ? 'Promosi masa terhad — jangan lepaskan peluang ini!' : 'Pilihan dipercayai untuk pelanggan di Kepong dan Kuala Lumpur.'}\n\n${description}\n\n✅ Servis mesra dan profesional\n✅ Sesuai untuk pelanggan tempatan\n✅ Hubungi kami sekarang untuk maklumat lanjut\n\n#Kepong #SMEMalaysia #PerniagaanTempatan`;
+      }
+
+      if (language === '英文') {
+        return `${brand}\n\n${tone === 'urgent' ? 'Limited-time offer — do not miss out!' : 'A trusted local choice for customers in Kepong and Kuala Lumpur.'}\n\n${description}\n\n✅ Friendly, professional service\n✅ Built for local customers\n✅ Message us today for details\n\n#Kepong #SMEMalaysia #LocalBusiness`;
+      }
+
+      if (language === '中英双语') {
+        return `${brand}\n\n${toneLead}\n${description}\n\n✅ 专业服务\n✅ 本地商家\n✅ 欢迎 WhatsApp 咨询\n\n— English —\nA trusted local choice in Kepong.\n${description}\n\nMessage us today for details.\n\n#甲洞 #Kepong #SMEMalaysia`;
+      }
+
+      return `${brand}\n\n${toneLead}\n\n${description}\n\n为什么顾客选择我们？\n✅ 本地商家，沟通更方便\n✅ 服务清楚，价格透明\n✅ 适合正在寻找可靠方案的您\n\n现在就通过 WhatsApp 联系我们，了解详情或预约服务。\n\n#甲洞 #吉隆坡 #大马中小企业 #${platform}`;
+    }
+
+    async function fetchWithTimeout(url, options, timeout = 18000) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeout);
+
+      try {
+        return await fetch(url, { ...options, signal: controller.signal });
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    function setCopyLoading(loading) {
+      const button = document.getElementById('btn-generate-text');
+      button.disabled = loading;
+      button.classList.toggle('opacity-70', loading);
+      document.getElementById('text-btn-icon').textContent = loading ? '⏳' : '✨';
+      document.getElementById('text-btn-label').textContent = loading ? 'AI 正在构思...' : '一键生成宣传文案';
+    }
+
+    async function generateAICopy() {
+      const brand = document.getElementById('ai-brand-name').value.trim();
+      const description = document.getElementById('ai-product-desc').value.trim();
+      const tone = document.getElementById('ai-tone').value;
+      const platform = document.getElementById('ai-platform').value;
+      const language = document.getElementById('ai-language').value;
+
+      if (!brand || !description) {
+        showToast('请填写品牌名称和核心卖点', '✍️');
+        return;
+      }
+
+      const payload = { brand, description, tone, platform, language, industry: state.industry };
+      const output = document.getElementById('ai-text-output');
+
+      setCopyLoading(true);
+      output.innerHTML = `
+        <div class="space-y-3">
+          <div class="skeleton h-3 w-5/6 rounded"></div>
+          <div class="skeleton h-3 w-full rounded"></div>
+          <div class="skeleton h-3 w-4/5 rounded"></div>
+          <div class="skeleton h-3 w-11/12 rounded"></div>
+        </div>
+      `;
+
+      let text = '';
+      let usedFallback = false;
+
+      try {
+        const response = await fetchWithTimeout(API_CONFIG.copyEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }, API_CONFIG.requestTimeout);
+
+        if (!response.ok) throw new Error(`API ${response.status}`);
+        const data = await response.json();
+        text = data.text || data.content || '';
+        if (!text) throw new Error('Empty AI response');
+      } catch (error) {
+        usedFallback = true;
+        text = buildLocalCopy(payload);
+      } finally {
+        setCopyLoading(false);
+      }
+
+      state.generatedCopy = text;
+      state.usedCopyTool = true;
+      output.textContent = text;
+
+      if (usedFallback) {
+        showToast('已使用现场示范模式生成文案', '🪄');
+      } else {
+        showToast('AI 文案生成完成', '✅');
+      }
+    }
+
+    function regenerateCopy() {
+      if (!document.getElementById('ai-brand-name').value.trim()) {
+        showToast('请先填写品牌资料', '✍️');
+        return;
+      }
+      generateAICopy();
+    }
+
+    async function copyToClipboard(text, successMessage) {
+      if (!text) {
+        showToast('目前没有可复制的内容', '📋');
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+
+      showToast(successMessage, '📋');
+    }
+
+    function copyGeneratedText() {
+      copyToClipboard(state.generatedCopy, '文案已复制');
+    }
+
+    function useForPoster() {
+      if (!state.generatedCopy) {
+        showToast('请先生成一份文案', '✍️');
+        return;
+      }
+
+      const brand = document.getElementById('ai-brand-name').value.trim();
+      const description = document.getElementById('ai-product-desc').value.trim();
+      document.getElementById('poster-headline').value = `${brand}｜限时推广`;
+      document.getElementById('poster-brief').value = description;
+      switchPlaygroundTab('image');
+      showToast('文案资料已带入图像生成', '🎨');
+    }
+
+    function setPosterLoading(loading) {
+      const button = document.getElementById('btn-generate-poster');
+      button.disabled = loading;
+      button.classList.toggle('opacity-70', loading);
+      document.getElementById('poster-btn-icon').textContent = loading ? '⏳' : '🎨';
+      document.getElementById('poster-btn-label').textContent =
+        loading ? '正在制作宣传图...' : '免费生成宣传图';
+    }
+
+    function getPosterPalette(style) {
+      const palettes = {
+        premium: {
+          top: '#071425',
+          bottom: '#173b55',
+          accent: '#f5b942',
+          secondary: '#dce9f2'
+        },
+        local: {
+          top: '#0f3d2e',
+          bottom: '#1f7a5a',
+          accent: '#ffd166',
+          secondary: '#ecfdf5'
+        },
+        modern: {
+          top: '#111827',
+          bottom: '#312e81',
+          accent: '#34d399',
+          secondary: '#e0e7ff'
+        },
+        festive: {
+          top: '#7f1d1d',
+          bottom: '#c2410c',
+          accent: '#fde047',
+          secondary: '#fff7ed'
+        },
+        bold: {
+          top: '#18181b',
+          bottom: '#7c2d12',
+          accent: '#fb7185',
+          secondary: '#fff1f2'
+        }
+      };
+      return palettes[style] || palettes.modern;
+    }
+
+    function canvasRoundedRect(ctx, x, y, width, height, radius) {
+      const r = Math.min(radius, width / 2, height / 2);
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + width, y, x + width, y + height, r);
+      ctx.arcTo(x + width, y + height, x, y + height, r);
+      ctx.arcTo(x, y + height, x, y, r);
+      ctx.arcTo(x, y, x + width, y, r);
+      ctx.closePath();
+    }
+
+    function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 4) {
+      const words = String(text || '').split('');
+      const lines = [];
+      let current = '';
+
+      words.forEach(char => {
+        const test = current + char;
+        if (ctx.measureText(test).width > maxWidth && current) {
+          lines.push(current);
+          current = char;
+        } else {
+          current = test;
+        }
+      });
+
+      if (current) lines.push(current);
+
+      const visibleLines = lines.slice(0, maxLines);
+      visibleLines.forEach((line, index) => {
+        const suffix =
+          index === maxLines - 1 && lines.length > maxLines ? '…' : '';
+        ctx.fillText(line + suffix, x, y + index * lineHeight);
+      });
+
+      return y + visibleLines.length * lineHeight;
+    }
+
+    async function generatePosterConcept() {
+      const headline = document.getElementById('poster-headline').value.trim();
+      const brief = document.getElementById('poster-brief').value.trim();
+      const style = document.getElementById('poster-style').value;
+      const format = document.getElementById('poster-format').value;
+      const brand =
+        document.getElementById('ai-brand-name').value.trim() ||
+        state.businessName ||
+        state.industry;
+
+      if (!headline || !brief) {
+        showToast('请填写宣传图标题和内容', '🎨');
+        return;
+      }
+
+      setPosterLoading(true);
+
+      try {
+        if (document.fonts?.ready) {
+          await document.fonts.ready;
+        }
+
+        const [width, height] = format.split('x').map(Number);
+        const canvas = document.createElement('canvas');
+        canvas.width = width || 1080;
+        canvas.height = height || 1350;
+        const ctx = canvas.getContext('2d');
+
+        const palette = getPosterPalette(style);
+        const visual = industryVisuals[state.industry] || industryVisuals['其他领域'];
+        const scale = canvas.width / 1080;
+        const pad = 72 * scale;
+
+        // Main gradient.
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, palette.top);
+        gradient.addColorStop(1, palette.bottom);
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Decorative circles.
+        ctx.globalAlpha = 0.18;
+        ctx.fillStyle = palette.accent;
+        ctx.beginPath();
+        ctx.arc(canvas.width * 0.88, canvas.height * 0.12, canvas.width * 0.22, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.globalAlpha = 0.1;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(canvas.width * 0.08, canvas.height * 0.8, canvas.width * 0.3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        // Chamber badge.
+        ctx.fillStyle = 'rgba(0,0,0,.28)';
+        canvasRoundedRect(ctx, pad, pad, 380 * scale, 64 * scale, 22 * scale);
+        ctx.fill();
+
+        ctx.fillStyle = palette.accent;
+        ctx.font = `700 ${25 * scale}px "Noto Sans SC", sans-serif`;
+        ctx.textBaseline = 'middle';
+        ctx.fillText('KLK SME AI 转型计划', pad + 24 * scale, pad + 32 * scale);
+
+        // Industry icon.
+        ctx.font = `${150 * scale}px "Noto Sans SC", sans-serif`;
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillText(visual.emoji || '💡', pad, canvas.height * 0.33);
+
+        // Brand.
+        ctx.fillStyle = palette.secondary;
+        ctx.font = `700 ${34 * scale}px "Noto Sans SC", sans-serif`;
+        ctx.fillText(brand, pad, canvas.height * 0.4);
+
+        // Headline.
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `900 ${72 * scale}px "Noto Sans SC", sans-serif`;
+        const headlineBottom = drawWrappedText(
+          ctx,
+          headline,
+          pad,
+          canvas.height * 0.49,
+          canvas.width - pad * 2,
+          88 * scale,
+          3
+        );
+
+        // Brief.
+        ctx.fillStyle = palette.secondary;
+        ctx.font = `500 ${31 * scale}px "Noto Sans SC", sans-serif`;
+        const briefBottom = drawWrappedText(
+          ctx,
+          brief,
+          pad,
+          headlineBottom + 26 * scale,
+          canvas.width - pad * 2,
+          48 * scale,
+          4
+        );
+
+        // CTA panel.
+        const ctaY = Math.min(
+          canvas.height - 235 * scale,
+          Math.max(briefBottom + 50 * scale, canvas.height * 0.75)
+        );
+
+        ctx.fillStyle = 'rgba(255,255,255,.94)';
+        canvasRoundedRect(
+          ctx,
+          pad,
+          ctaY,
+          canvas.width - pad * 2,
+          145 * scale,
+          34 * scale
+        );
+        ctx.fill();
+
+        ctx.fillStyle = palette.top;
+        ctx.font = `800 ${37 * scale}px "Noto Sans SC", sans-serif`;
+        ctx.fillText('立即联系 · 了解更多', pad + 34 * scale, ctaY + 55 * scale);
+
+        ctx.fillStyle = palette.bottom;
+        ctx.font = `700 ${31 * scale}px "Noto Sans SC", sans-serif`;
+        ctx.fillText('WhatsApp / 电话：012-692 7880', pad + 34 * scale, ctaY + 107 * scale);
+
+        // Footer.
+        ctx.fillStyle = 'rgba(255,255,255,.72)';
+        ctx.font = `500 ${20 * scale}px "Noto Sans SC", sans-serif`;
+        ctx.fillText(
+          `吉隆坡甲洞中小型企业商会 · ${state.industry}`,
+          pad,
+          canvas.height - 38 * scale
+        );
+
+        const imageUrl = canvas.toDataURL('image/png', 1);
+        state.generatedImageUrl = imageUrl;
+        state.posterPrompt =
+          `零成本浏览器宣传图｜品牌：${brand}｜标题：${headline}｜行业：${state.industry}`;
+        state.usedPosterTool = true;
+
+        const preview = document.getElementById('poster-preview');
+        const output = document.getElementById('poster-output');
+        const actions = document.getElementById('poster-image-actions');
+
+        preview.innerHTML = `
+          <img
+            src="${imageUrl}"
+            alt="免费生成的商业宣传图"
+            class="max-h-[620px] h-full w-full rounded-xl object-contain"
+          />
+        `;
+
+        output.textContent =
+          '这是测试阶段的零成本宣传图：在浏览器本机生成，不调用收费图像 API。';
+        output.classList.remove('hidden');
+        actions.classList.remove('hidden');
+        actions.classList.add('grid');
+
+        showToast('宣传图生成完成，可以直接下载', '✅');
+      } catch (error) {
+        showToast('宣传图生成失败，请重试', '⚠️');
+      } finally {
+        setPosterLoading(false);
+      }
+    }
+
+    function handleGeneratedImageError(imageElement) {
+      state.generatedImageUrl = '';
+      const preview = document.getElementById('poster-preview');
+      const actions = document.getElementById('poster-image-actions');
+
+      preview.innerHTML = `
+        <div class="max-w-sm">
+          <div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-rose-500/10 text-3xl">⚠️</div>
+          <p class="mt-4 text-sm font-bold text-rose-300">图片载入失败</p>
+          <p class="mt-2 text-xs leading-5 text-slate-500">请检查图像网址是否允许浏览器直接访问，或让后端返回 Base64 图片。</p>
+        </div>
+      `;
+
+      actions.classList.add('hidden');
+      actions.classList.remove('grid');
+      showToast('图片载入失败，请检查图像接口', '⚠️');
+    }
+
+    async function downloadGeneratedImage() {
+      if (!state.generatedImageUrl) {
+        showToast('目前没有可下载的图片', '🖼️');
+        return;
+      }
+
+      const link = document.createElement('a');
+      link.href = state.generatedImageUrl;
+      link.download = `SME_AI_宣传图_${Date.now()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      showToast('图片已下载', '⬇');
+    }
+
+    function copyPosterPrompt() {
+      copyToClipboard(state.posterPrompt, '图像提示词已复制');
+    }
+
+    function calculateFinalScore() {
+      const questions = getActiveQuizQuestions();
+      const maxQuizScore = questions.length * 15;
+      const normalizedQuiz = maxQuizScore
+        ? Math.round((state.quizScore / maxQuizScore) * 82)
+        : 0;
+
+      let score = normalizedQuiz;
+      score += Math.min(state.painpoints.length, 4);
+      if (state.usedCopyTool) score += 7;
+      if (state.usedPosterTool) score += 7;
+      return Math.min(100, score);
+    }
+
+    function getResultLevel(score) {
+      if (score >= 86) {
+        return {
+          title: 'AI 转型先锋',
+          summary: '您已经具备很强的 AI 应用意识。下一步应把零散工具整合成固定流程，并设定负责人和衡量指标。'
+        };
+      }
+      if (score >= 70) {
+        return {
+          title: 'AI 实战准备者',
+          summary: '您已经看见 AI 的实际价值，适合从一至两个高频、重复、容易衡量的流程开始落地。'
+        };
+      }
+      if (score >= 50) {
+        return {
+          title: 'AI 潜力探索者',
+          summary: '您的企业有明显的 AI 改善空间。建议先选择风险低、见效快的文案、客服或资料整理场景。'
+        };
+      }
+      return {
+        title: 'AI 转型起步者',
+        summary: '您不需要一次过改变整个企业。先让 AI 处理一项每天重复出现的小任务，就是最稳妥的开始。'
+      };
+    }
+
+    function finishAdventure() {
+      const score = calculateFinalScore();
+      const level = getResultLevel(score);
+      const actions = state.painpoints
+        .slice(0, 3)
+        .map(p => resultActionsMap[p])
+        .filter(Boolean);
+
+      if (!actions.length) {
+        actions.push('先找出每天重复超过 30 分钟的工作，选择其中一项进行 AI 小规模测试。');
+      }
+
+      document.getElementById('result-score').textContent = score;
+      document.getElementById('result-level').textContent = level.title;
+      document.getElementById('result-summary').textContent = level.summary;
+      document.getElementById('result-business-name').textContent = state.businessName || '未填写';
+      document.getElementById('result-phone').textContent = formatPhone(state.phone);
+      document.getElementById('result-industry').textContent = state.industry;
+      document.getElementById('result-painpoints').textContent = state.painpoints.join('、');
+      document.getElementById('result-quiz-score').textContent = `${state.quizScore} / ${getActiveQuizQuestions().length * 15}`;
+      document.getElementById('result-tools').textContent = [
+        state.usedCopyTool ? 'AI 文案' : '',
+        state.usedPosterTool ? '图像生成' : ''
+      ].filter(Boolean).join('、') || '尚未体验';
+
+      document.getElementById('result-actions').innerHTML = actions.map((action, index) => `
+        <li class="flex gap-3">
+          <span class="grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-primary-500/12 text-[10px] font-bold text-primary-300">${index + 1}</span>
+          <span>${escapeHtml(action)}</span>
+        </li>
+      `).join('');
+
+      const message = `您好，我刚完成吉隆坡甲洞中小型企业商会的 SME AI 转型测试。我的公司是${state.businessName || '未填写'}，行业是${state.industry}，AI 准备指数是 ${score}/100。我想了解适合我的 AI 实战课程。`;
+      document.getElementById('whatsapp-link').href = `https://wa.me/60126927880?text=${encodeURIComponent(message)}`;
+
+      saveSession(score);
+      goToScreen('result');
+    }
+
+    async function saveLeadRecord(status, score = null) {
+      const now = new Date().toISOString();
+      const phone = normalizeMalaysiaPhone(state.phone);
+      const leads = getLeads();
+
+      if (!state.leadId) {
+        throw new Error('缺少本次测试记录 ID');
+      }
+
+      const duplicateByPhone = leads.find(
+        item =>
+          normalizeMalaysiaPhone(item.phone) === phone &&
+          item.id !== state.leadId
+      );
+
+      if (duplicateByPhone) {
+        throw new Error('这个电话号码已经参加过测试');
+      }
+
+      const existingIndex = leads.findIndex(item => item.id === state.leadId);
+
+      const record = {
+        id: state.leadId,
+        createdAt: existingIndex >= 0 ? leads[existingIndex].createdAt : now,
+        updatedAt: now,
+        businessName: state.businessName,
+        phone,
+        industry: state.industry,
+        painpoints: state.painpoints,
+        status,
+        quizScore: state.quizScore,
+        quizMaxScore: getActiveQuizQuestions().length * 15,
+        finalScore: score,
+        quizAnswers: state.quizAnswers,
+        usedCopyTool: state.usedCopyTool,
+        usedPosterTool: state.usedPosterTool,
+        consent: true
+      };
+
+      if (existingIndex >= 0) {
+        leads[existingIndex] = { ...leads[existingIndex], ...record };
+      } else {
+        leads.push(record);
+      }
+
+      localStorage.setItem('klk_sme_ai_leads', JSON.stringify(leads.slice(-1000)));
+
+      const endpoint = String(API_CONFIG.leadsEndpoint || '').trim();
+      const endpointReady =
+        endpoint.startsWith('https://script.google.com/macros/s/') &&
+        endpoint.endsWith('/exec');
+
+      if (!endpointReady) {
+        record.synced = false;
+        return record;
+      }
+
+      try {
+        await fetch(endpoint, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(record),
+          keepalive: true
+        });
+        record.synced = true;
+      } catch (error) {
+        record.synced = false;
+      }
+
+      return record;
+    }
+
+    function saveSession(score) {
+      const sessions = getSessions();
+      sessions.push({
+        id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
+        createdAt: new Date().toISOString(),
+        businessName: state.businessName,
+        phone: state.phone,
+        industry: state.industry,
+        painpoints: state.painpoints,
+        quizScore: state.quizScore,
+        quizMaxScore: getActiveQuizQuestions().length * 15,
+        quizAnswers: state.quizAnswers,
+        finalScore: score,
+        usedCopyTool: state.usedCopyTool,
+        usedPosterTool: state.usedPosterTool
+      });
+
+      localStorage.setItem('klk_sme_ai_sessions', JSON.stringify(sessions.slice(-500)));
+      saveLeadRecord('completed', score);
+    }
+
+    function getSessions() {
+      try {
+        const raw = localStorage.getItem('klk_sme_ai_sessions');
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function getLeads() {
+      try {
+        const raw = localStorage.getItem('klk_sme_ai_leads');
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function restartAdventure() {
+      state.industry = '';
+      state.businessName = '';
+      state.phone = '';
+      state.leadId = '';
+      state.painpoints = [];
+      state.quizIndex = 0;
+      state.quizScore = 0;
+      state.quizAnswered = false;
+      state.quizAnswers = [];
+      state.generatedCopy = '';
+      state.posterPrompt = '';
+      state.generatedImageUrl = '';
+      state.usedCopyTool = false;
+      state.usedPosterTool = false;
+
+      document.querySelectorAll('.industry-card').forEach(card => card.classList.remove('selected'));
+      document.querySelectorAll('input[name="painpoint"]').forEach(input => input.checked = false);
+      document.getElementById('business-name').value = '';
+      document.getElementById('owner-phone').value = '';
+      document.getElementById('data-consent').checked = false;
+      document.getElementById('owner-phone').classList.remove('phone-valid', 'phone-invalid');
+      document.getElementById('phone-help').textContent = '仅用于商会联系、发送测试报告或课程资料。';
+      document.getElementById('phone-help').className = 'mt-1.5 text-[10px] text-slate-500';
+      document.getElementById('ai-brand-name').value = '';
+      document.getElementById('ai-product-desc').value = '';
+      document.getElementById('ai-text-output').textContent = '填写左边资料后，点击「一键生成宣传文案」。';
+      document.getElementById('poster-headline').value = '';
+      document.getElementById('poster-brief').value = '';
+      document.getElementById('poster-output').classList.add('hidden');
+      document.getElementById('poster-image-actions').classList.add('hidden');
+      document.getElementById('poster-image-actions').classList.remove('grid');
+
+      goToScreen('welcome');
+    }
+
+    function toggleDashboard() {
+      if (state.currentScreen === 'dashboard') {
+        closeDashboard();
+        return;
+      }
+      state.previousScreen = state.currentScreen;
+      renderDashboard();
+      goToScreen('dashboard');
+    }
+
+    function closeDashboard() {
+      goToScreen(state.previousScreen === 'dashboard' ? 'welcome' : state.previousScreen);
+    }
+
+    function renderDashboard() {
+      const leads = getLeads();
+      const completed = leads.filter(item => item.status === 'completed' && Number.isFinite(Number(item.finalScore)));
+      const total = leads.length;
+      const average = completed.length
+        ? Math.round(completed.reduce((sum, item) => sum + Number(item.finalScore || 0), 0) / completed.length)
+        : 0;
+      const copyCount = leads.filter(item => item.usedCopyTool).length;
+      const posterCount = leads.filter(item => item.usedPosterTool).length;
+
+      document.getElementById('dash-total').textContent = total;
+      document.getElementById('dash-average').textContent = average;
+      document.getElementById('dash-copy').textContent = copyCount;
+      document.getElementById('dash-poster').textContent = posterCount;
+
+      renderDistribution('dash-industries', countBy(leads.map(item => item.industry).filter(Boolean)), total);
+      renderDistribution('dash-painpoints', countBy(leads.flatMap(item => item.painpoints || [])), total);
+
+      const records = [...leads]
+        .sort((a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt))
+        .slice(0, 20);
+
+      document.getElementById('dash-records').innerHTML = records.length
+        ? records.map(item => `
+          <tr>
+            <td class="px-4 py-3 text-slate-500">${formatDate(item.updatedAt || item.createdAt)}</td>
+            <td class="px-4 py-3 font-semibold">${escapeHtml(item.businessName || '未填写')}</td>
+            <td class="px-4 py-3">
+              <a class="font-semibold text-primary-300 hover:underline"
+                 href="tel:+${escapeHtml(normalizeMalaysiaPhone(item.phone))}">
+                ${escapeHtml(formatPhone(item.phone))}
+              </a>
+            </td>
+            <td class="px-4 py-3 font-semibold">${escapeHtml(item.industry || '—')}</td>
+            <td class="px-4 py-3">
+              <span class="rounded-lg px-2 py-1 font-bold ${item.status === 'completed' ? 'bg-primary-500/10 text-primary-300' : 'bg-amber-500/10 text-amber-300'}">
+                ${item.status === 'completed' ? '已完成' : '进行中'}
+              </span>
+            </td>
+            <td class="px-4 py-3">
+              ${item.finalScore !== null && item.finalScore !== undefined
+                ? `<span class="rounded-lg bg-primary-500/10 px-2 py-1 font-bold text-primary-300">${Number(item.finalScore)}</span>`
+                : '<span class="text-slate-600">—</span>'}
+            </td>
+            <td class="max-w-[260px] px-4 py-3 text-slate-400">${escapeHtml((item.painpoints || []).join('、') || '—')}</td>
+            <td class="px-4 py-3 text-slate-400">${[
+              item.usedCopyTool ? '文案' : '',
+              item.usedPosterTool ? '图像' : ''
+            ].filter(Boolean).join('、') || '—'}</td>
+          </tr>
+        `).join('')
+        : `<tr><td colspan="8" class="px-4 py-10 text-center text-slate-600">目前还没有老板登记资料</td></tr>`;
+    }
+
+    function countBy(items) {
+      return items.reduce((acc, item) => {
+        acc[item] = (acc[item] || 0) + 1;
+        return acc;
+      }, {});
+    }
+
+    function renderDistribution(elementId, data, total) {
+      const entries = Object.entries(data).sort((a, b) => b[1] - a[1]).slice(0, 8);
+      const element = document.getElementById(elementId);
+
+      if (!entries.length) {
+        element.innerHTML = '<p class="py-8 text-center text-xs text-slate-600">暂无数据</p>';
+        return;
+      }
+
+      element.innerHTML = entries.map(([label, value]) => {
+        const percentage = total ? Math.round((value / total) * 100) : 0;
+        return `
+          <div>
+            <div class="mb-1.5 flex items-center justify-between gap-3 text-[11px]">
+              <span class="truncate text-slate-300">${escapeHtml(label)}</span>
+              <span class="shrink-0 text-slate-500">${value} · ${percentage}%</span>
+            </div>
+            <div class="h-2 overflow-hidden rounded-full bg-slate-800">
+              <div class="h-full rounded-full bg-gradient-to-r from-primary-600 to-primary-400" style="width:${Math.max(percentage, 4)}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function formatDate(iso) {
+      try {
+        return new Intl.DateTimeFormat('zh-MY', {
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        }).format(new Date(iso));
+      } catch {
+        return '—';
+      }
+    }
+
+    function exportDashboardCSV() {
+      const leads = getLeads();
+      if (!leads.length) {
+        showToast('目前没有可导出的老板资料', '📊');
+        return;
+      }
+
+      const rows = [
+        ['登记时间', '最后更新', '公司或商家', '老板电话', '行业', '状态', 'AI准备指数', '闯关分数', '主要痛点', '文案工具', '图像工具'],
+        ...leads.map(item => [
+          item.createdAt,
+          item.updatedAt || item.createdAt,
+          item.businessName || '',
+          formatPhone(item.phone),
+          item.industry,
+          item.status === 'completed' ? '已完成' : '进行中',
+          item.finalScore ?? '',
+          item.quizScore ?? '',
+          (item.painpoints || []).join('；'),
+          item.usedCopyTool ? '是' : '否',
+          item.usedPosterTool ? '是' : '否'
+        ])
+      ];
+
+      const csv = '\uFEFF' + rows.map(row =>
+        row.map(value => `"${String(value ?? '').replace(/"/g, '""')}"`).join(',')
+      ).join('\n');
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `SME_AI_老板资料_${new Date().toISOString().slice(0, 10)}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast('老板资料 CSV 已导出', '📊');
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+
+    function showStorageStatus() {
+      const endpoint = String(API_CONFIG.leadsEndpoint || '').trim();
+      const endpointReady =
+        endpoint.startsWith('https://script.google.com/macros/s/') &&
+        endpoint.endsWith('/exec');
+
+      let latest = null;
+      try {
+        latest = JSON.parse(localStorage.getItem('klk_sme_ai_last_sync_status') || 'null');
+      } catch {
+        latest = null;
+      }
+
+      if (!endpointReady) {
+        showToast('目前只保存到本机；尚未设置 Google Apps Script /exec URL', '🧪');
+        return;
+      }
+
+      if (latest?.synced) {
+        showToast('Google Sheets 同步接口已设置，最近一次提交已发送', '✅');
+      } else {
+        showToast('接口已设置；尚无成功提交记录或最近一次发送失败', '⚠️');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      goToScreen('welcome');
+    });
+  </script>
+</body>
+</html>
